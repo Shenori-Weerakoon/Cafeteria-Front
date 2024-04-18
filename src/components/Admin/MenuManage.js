@@ -95,9 +95,25 @@ const columns = [
 ];
 
 return(
-    <div>
+    <div style={{ display: 'flex', height: '100vh', maxWidth: '161vh' }}>
 
-        App
+        <Sidebar />
+            <div style={{ flexGrow: 1, padding: 20, backgroundColor: '#B7EBBD', display: 'flex', flexDirection: 'column' }}>
+                <AppBar position="static" sx={{ backgroundColor: '#EDAF28', boxShadow: 'none' }}>
+                    <Toolbar>
+                        <Typography variant="h6" component="div">
+                            Menu Management
+                        </Typography>
+                        <div style={{ flexGrow: 1 }}></div>
+                        <Button 
+                        variant="contained" sx={{ bgcolor: '#009637', color: '#ffffff' }} onClick={handleAddMenu}>
+                            Add New Item
+                        </Button>
+                    </Toolbar>
+                </AppBar>
+
+                
+            </div>    
 
     </div>
 
