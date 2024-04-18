@@ -41,4 +41,24 @@ const MenuManage = () => {
 
 }
 
+const handleAddMenu = () => {
+    window.location.href = "/MenuForm";
+};
+
+const handleUpdateMenuItem = (selectedMenuItem) => {
+    const status = selectedMenuItem.status === 'Activate' ? 'Deactivate' : 'Activate';
+    selectedMenuItem.status = status;
+    axios.put(global.APIUrl + '/menuItem/update', selectedMenuItem).then(() => {
+        window.location.href = "/MenuManage";
+    }).catch((err) => {
+        Swal.fire({
+            title: "Error!",
+            text: "Menu Item Not Updated",
+            icon: 'error',
+            confirmButtonText: "OK",
+            type: "success"
+        })
+    });
+}
+
 export default MenuManage;
