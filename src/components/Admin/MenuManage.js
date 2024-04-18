@@ -1,18 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Sidebar from '../Main/SideBar';
-import { DataGrid } from '@mui/x-data-grid';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import CheckIcon from '@mui/icons-material/Check';
-import CloseIcon from '@mui/icons-material/Close';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import { Avatar } from '@mui/material';
 
 const MenuManage = () => {
     const [menu, setMenu] = useState([]);
@@ -60,5 +48,21 @@ const handleUpdateMenuItem = (selectedMenuItem) => {
         })
     });
 }
+
+const handleDeleteMenu = (itemId) => {
+    axios.delete(global.APIUrl + "/menuItem/delete/" + itemId).then(() => {
+        window.location.href = "/MenuManage";
+
+    }).catch((err) => {
+        Swal.fire({
+            title: "Error!",
+            text: "Menu Not Delete",
+            icon: 'error',
+            confirmButtonText: "OK",
+            type: "success"
+        })
+    })
+
+};
 
 export default MenuManage;
