@@ -1,4 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import {
+    Typography,
+    TextField,
+    Button,
+    Grid,
+    Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
+} from '@material-ui/core';
 import Navbar from '../Main/NavBar.js';
 import Footer from '../Main/Footer';
 import axios from 'axios';
@@ -71,5 +79,23 @@ function Orders() {
             })
         })
 
+    };
+    const getStatusColor = (status) => {   
+        switch (status) {
+            case 'Processing':
+                return 'blue';
+            case 'Accept':
+                return 'green';
+            case 'Reject':
+                return 'red';
+            case 'Cooking':
+                return 'orange';
+            case 'Delivering':
+                return 'purple';
+            case 'Completed':
+                return 'green';
+            default:
+                return 'black';
+        }
     };
 }    
