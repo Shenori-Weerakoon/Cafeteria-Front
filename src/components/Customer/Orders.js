@@ -39,5 +39,37 @@ function Orders() {
         } catch (error) {
             console.error('Error fetching order details:', error);
         }
-    }    
+    }  
+    
+    async function handleDeletePaid(orderID) {                                          
+        await axios.delete(global.APIUrl + "/payOrder/deletePaidOrder/" + orderID).then(() => {
+            window.location.href = "/Orders";
+
+        }).catch((err) => {
+            Swal.fire({
+                title: "Error!",
+                text: "Order Not Delete",
+                icon: 'error',
+                confirmButtonText: "OK",
+                type: "success"
+            });
+        });
+
+    }
+
+    const handleDeleteCod = async (orderID) => {
+        await axios.delete(global.APIUrl + "/codOrder/deleteOrder/" + orderID).then(() => {
+            window.location.href = "/Orders";
+
+        }).catch((err) => {
+            Swal.fire({
+                title: "Error!",
+                text: "Order Not Delete",
+                icon: 'error',
+                confirmButtonText: "OK",
+                type: "success"
+            })
+        })
+
+    };
 }    
