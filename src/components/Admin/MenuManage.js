@@ -48,6 +48,22 @@ const handleUpdateMenuItem = (selectedMenuItem) => {
     });
 }
 
+const handleDeleteMenu = (itemId) => {
+    axios.delete(global.APIUrl + "/menuItem/delete/" + itemId).then(() => {
+        window.location.href = "/MenuManage";
+
+    }).catch((err) => {
+        Swal.fire({
+            title: "Error!",
+            text: "Menu Not Delete",
+            icon: 'error',
+            confirmButtonText: "OK",
+            type: "success"
+        })
+    })
+
+};
+
 
 const columns = [
     { field: 'itemId', headerName: 'Item ID', width: 150 },
