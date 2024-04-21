@@ -58,6 +58,12 @@ const CartPage = () => {
     }
   }, []);
 
+  const handleRemoveFromCart = (id) => {
+    setCartItems(cartItems.filter((item) => item.id !== id));
+  };
+
+  
+
   
 
   return (
@@ -107,7 +113,7 @@ const CartPage = () => {
             </Card>
         ))}
 
-        
+
 
       </div>
     </>
