@@ -96,7 +96,72 @@ const MenuPage = () => {
                     <hr style={{ width: '150px' }} />
                 </Typography>
 
-            </div>    
+                <Grid container spacing={4} style={{marginBottom:'153px'}}>
+                    {menu.map((menuItem) => (
+                        <Grid item xs={12} sm={6} md={4} key={menuItem.id}>
+                            {menuItem.status === 'Activate' && (
+                                <Card className={classes.card}>
+                                    <CardMedia
+                                        className={classes.media}
+                                        image={menuItem.picture}
+                                        title={menuItem.name}
+                                    />
+                                    <CardContent>
+                                        <Typography gutterBottom variant="h5" component="h2" style={{ fontWeight: 'bold', }}>
+                                            {menuItem.itemName}
+                                        </Typography>
+                                        <Typography variant="body2" color="textSecondary" component="p">
+                                            {menuItem.description}
+                                        </Typography>
+                                        <Typography variant="body1" color="textPrimary">
+                                            Calorie: {menuItem.calorieCount}
+                                        </Typography>
+                                        <Typography variant="body1" color="textPrimary" style={{ fontWeight: 'bold' }}>
+                                            Price: ${menuItem.price}
+                                        </Typography>
+                                        <br />
+                                        <div>
+                                            <IconButton
+                                                aria-label="remove"
+                                                onClick={() => handleQtyChange({ target: { value: Math.max(quantity[menuItem.id] - 1, 0) } }, menuItem)}
+                                            >
+                                                <RemoveIcon />
+                                            </IconButton>
+                                            <TextField
+                                                className={classes.qtyField}
+                                                type="number"
+                                                variant="outlined"
+                                                size="small"
+                                                value={quantity[menuItem.id] || 0}
+                                                onChange={(e) => handleQtyChange(e, menuItem)}
+                                            />
+                                            <IconButton
+                                                aria-label="add"
+                                                className={classes.addButton}
+                                                onClick={() => handleQtyChange({ target: { value: (quantity[menuItem.id] || 0) + 1 } }, menuItem)}
+                                            >
+                                                <AddIcon />
+                                            </IconButton>
+                                        </div>
+                                        <Button
+                                            variant="contained"
+                                            color="primary"
+                                            className={classes.addToCartButton}
+                                            onClick={() => handleAddToCart(menuItem)}
+                                        >
+                                            Add to Cart
+                                        </Button>
+                                    </CardContent>
+                                </Card>
+                            )}
+                        </Grid>
+                        ))}
+                    </Grid>
+
+            </div>
+
+            <Footer />
+                
         </div>
     );
 };
