@@ -78,9 +78,25 @@ const MenuPage = () => {
 
     };
 
+    const handleQtyChange = (event, menuItem) => {
+        const { value } = event.target;
+        setQuantity(prevState => ({
+            ...prevState,
+            [menuItem.id]: value
+        }));
+    };
+
+
     return (
         <div>
             <Navbar />
+            <div className={classes.root}>
+                <Typography gutterBottom variant="h3" component="h3" style={{ fontWeight: 'bold', textAlign: 'center' }}>
+                    Menu Items
+                    <hr style={{ width: '150px' }} />
+                </Typography>
+
+            </div>    
         </div>
     );
 };
