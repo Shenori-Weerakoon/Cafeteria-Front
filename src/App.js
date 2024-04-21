@@ -19,7 +19,7 @@ function App() {
         <Route path="/Profile" element={<Profile/>} />
         <Route path="/CartPage" element={<CartPage />} />
         <Route path="/MenuPage" element={<MenuPage />} />
-        
+
 
       </Routes>
     </Router>
