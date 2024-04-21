@@ -62,7 +62,18 @@ const CartPage = () => {
     setCartItems(cartItems.filter((item) => item.id !== id));
   };
 
-  
+  const handleChangeQuantity = (id, quantity) => {
+    const updatedCartItems = cartItems.map((item) =>
+      item.id === id ? { ...item, quantity } : item
+    );
+    setCartItems(updatedCartItems);
+  };
+
+  const handleClearCart = () => {
+    localStorage.setItem('checkoutItems', JSON.stringify([]));
+    localStorage.setItem('cartItems', JSON.stringify([]));
+    window.location.href = '/MenuPage';
+  };
 
   
 
