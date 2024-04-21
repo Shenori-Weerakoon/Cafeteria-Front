@@ -52,13 +52,39 @@ const MenuPage = () => {
         fetchMenuDetails();
     }, []);
 
-    
+    const fetchMenuDetails = async () => {
+        try {
+            const response = await axios.get(global.APIUrl + '/menuItem/allMenuItem');
+            const menusWithId = response.data.map((menu, index) => ({
+                id: index + 1,
+                ...menu
+            }));
+            setMenu(menusWithId);
+        } catch (error) {
+            console.error('Error fetching menu details:', error);
+        }
+    };
+
+    const handleAddToCart = (menuItem) => {
+        const itemQuantity = quantity[menuItem.id] || 0;
+        if (itemQuantity <= 0) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Invalid Quantity',
+                text: 'Please enter a valid quantity greater than zero.',
+            });
+            return;
+        }
+
+    };
 
     return (
         <div>
-            App
+            <Navbar />
         </div>
     );
 };
+
+
 
 export default MenuPage;
