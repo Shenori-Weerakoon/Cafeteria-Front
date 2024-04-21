@@ -94,6 +94,21 @@ const columns = [
     },
 ];
 
+const getStatusColor = (status) => {
+    switch (status) {
+        case 'Deactivate':
+            return 'red';
+        case 'Activate':
+            return 'green';
+        default:
+            return 'black';
+    }
+};
+
+function renderPicture(params) {
+    return <Avatar alt="Item Picture" src={params.value} sx={{ width: 50, height: 50 }} variant="square" />;
+}
+
 return(
     <div style={{ display: 'flex', height: '100vh', maxWidth: '161vh' }}>
 
@@ -112,6 +127,14 @@ return(
                     </Toolbar>
                 </AppBar>
 
+                <div style={{ padding: 20, backgroundColor: '#ffffff', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', maxWidth: '161vh' }}>
+                    <Typography variant="h5" gutterBottom>
+                        Item Details
+                    </Typography>
+                    <div style={{ width: '100%' }}>
+                        <DataGrid rows={menu} columns={columns} pageSize={5} />
+                    </div>
+                </div>
                 
             </div>    
 
