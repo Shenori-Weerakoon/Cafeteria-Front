@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import MenuManage from './components/Admin/MenuManage';
+import MenuForm from './components/Admin/MenuForm';
 
 
 
@@ -9,7 +10,8 @@ function App() {
       <Routes>        
         
         <Route path="/MenuManage" element={<MenuManage />} />
-        
+        <Route path="/MenuForm" element={<MenuForm />} /> 
+
       </Routes>
     </Router>
   );
