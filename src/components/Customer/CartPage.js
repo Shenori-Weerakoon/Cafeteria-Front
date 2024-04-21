@@ -62,7 +62,27 @@ const CartPage = () => {
 
   return (
     <>
-      App
+      <Navbar />
+      <div className={classes.root}>
+        <Typography variant="h4" gutterBottom className={classes.title}>
+          Manage Cart
+        </Typography>
+        <hr />
+        <br />
+        {cartItems.map((item) => (
+          <Card key={item.id} className={classes.card}>
+            <CardMedia
+              className={classes.cardMedia}
+              image={item.picture}
+              title={item.name}
+              style={{ height: 160, width: 160 }}
+            />
+
+            
+            </Card>
+        ))}
+
+      </div>
     </>
 
   );
