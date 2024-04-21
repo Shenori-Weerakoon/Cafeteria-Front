@@ -6,7 +6,6 @@ import LogIn from './components/Customer/Login';
 import Profile from './components/Customer/Profile';
 
 
-
 function App() {
   return (
     <Router>
@@ -17,6 +16,7 @@ function App() {
         <Route path="/Login" element={<LogIn />} />
         <Route path="/Register" element={<SignUp />} />
         <Route path="/Profile" element={<Profile/>} />
+
 
       </Routes>
     </Router>
