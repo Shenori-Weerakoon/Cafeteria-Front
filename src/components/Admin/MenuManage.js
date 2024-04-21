@@ -64,6 +64,16 @@ const handleDeleteMenu = (itemId) => {
 
 };
 
+const handleEdit = (selectedMenu) => {
+    const editBtn = true;
+    const data = {
+        selectedMenu,
+        editBtn
+    };
+    localStorage.setItem('selectedMenu', JSON.stringify(data));
+    window.location.href = "/MenuForm";
+};
+
 
 const columns = [
     { field: 'itemId', headerName: 'Item ID', width: 150 },
