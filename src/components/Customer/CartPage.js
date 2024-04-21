@@ -75,6 +75,14 @@ const CartPage = () => {
     window.location.href = '/MenuPage';
   };
 
+  const calculateTotal = () => {
+    return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+  };
+
+  const calculateCalories = () => {
+    return cartItems.reduce((total, item) => total + item.calorieCount * item.quantity, 0);
+  };
+
   
 
   return (
@@ -124,7 +132,33 @@ const CartPage = () => {
             </Card>
         ))}
 
-
+{cartItems.length === 0 && (
+          <Typography variant="subtitle1" color="textSecondary">
+            Your cart is empty.
+          </Typography>
+        )}
+        {cartItems.length > 0 && (
+          <div style={{ marginLeft: '160px', marginRight: '160px' }}>
+            <Typography variant="h6" gutterBottom className={classes.totalAmount}>
+              Total Price: ${calculateTotal()}
+            </Typography>
+            <Typography variant="h6" gutterBottom className={classes.totalAmount}>
+              Total Calories: {calculateCalories()}
+            </Typography>
+            <Grid container spacing={2}>
+              <Grid item>
+                <Button variant="contained" style={{backgroundColor:'red', color:'white'}} onClick={handleClearCart}>
+                  Clear Cart
+                </Button>
+              </Grid>
+              <Grid item className={classes.buttonGroup}>
+                <Button variant="contained" color="primary" onClick={handleCheckout}>
+                  Check Out
+                </Button>
+              </Grid>
+            </Grid>
+          </div>
+        )}
 
       </div>
     </>
