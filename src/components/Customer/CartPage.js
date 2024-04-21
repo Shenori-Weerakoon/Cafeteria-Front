@@ -77,10 +77,37 @@ const CartPage = () => {
               title={item.name}
               style={{ height: 160, width: 160 }}
             />
+<div className={classes.cardDetails}>
+              <CardContent>
+                <Typography variant="subtitle1" style={{ fontWeight: 'bold', fontSize: 18 }}>{item.itemName}</Typography>
+                <Typography variant="subtitle2" color="">
+                  Price: ${item.price}
+                </Typography>
+                <Typography variant="subtitle2" color="">
+                  Calories: {item.calorieCount}
+                </Typography>
+                <Typography variant="subtitle2" color="textSecondary">
+                  Quantity:
+                  <input
+                    type="number"
+                    style={{ width: 50, marginLeft: 10 }}
+                    value={item.quantity}
+                    onChange={(e) => handleChangeQuantity(item.id, parseInt(e.target.value))}
+                    min={1}
+                  />
+                </Typography>
+              </CardContent>
+              <CardActions disableSpacing>
+                <IconButton aria-label="remove" onClick={() => handleRemoveFromCart(item.id)}>
+                  <DeleteIcon />
+                </IconButton>
+              </CardActions>
+            </div>
 
-            
             </Card>
         ))}
+
+        
 
       </div>
     </>
