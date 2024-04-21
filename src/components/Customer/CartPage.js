@@ -83,6 +83,15 @@ const CartPage = () => {
     return cartItems.reduce((total, item) => total + item.calorieCount * item.quantity, 0);
   };
 
+  const handleCheckout = () => {
+    const checkoutItems = {
+      items: cartItems,
+      totalPrice: calculateTotal(),
+      orderID: Math.floor(Math.random() * 1000000) + 1,
+    };
+    localStorage.setItem('checkoutItems', JSON.stringify(checkoutItems));
+    window.location.href = '/CheckoutPage';
+  };
   
 
   return (
