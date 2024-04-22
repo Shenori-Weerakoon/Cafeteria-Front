@@ -6,7 +6,9 @@ import {
     Divider,
     Paper,
     Button,
-    Avatar
+    Avatar,
+    Modal,
+    TextField,
 } from '@material-ui/core';
 import Navbar from '../Main/NavBar.js';
 import Footer from '../Main/Footer';
@@ -45,14 +47,27 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
         justifyContent: 'center',
     },
-
+    modalPaper: {
+        position: 'absolute',
+        width: 400,
+        backgroundColor: theme.palette.background.paper,
+        border: '2px solid #000',
+        boxShadow: theme.shadows[5],
+        padding: theme.spacing(2, 4, 3),
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+    },
 }));
 
 function Profile() {
     const classes = useStyles();
     const email = sessionStorage.getItem("cusmail");
     const [profile, setProfile] = useState([]);
+    const [editModalOpen, setEditModalOpen] = useState(false);
     const profileDetails = profile[0] || {};
+    const [edtname, setEdtname] = useState(profileDetails.name);
+    const [edtphone, setEdtphone] = useState(profileDetails.phone);    
 
     useEffect(() => {
         fetchProfile();
@@ -60,7 +75,7 @@ function Profile() {
 
     const fetchProfile = async () => {
         try {
-            const res = await axios.get(`http://localhost:5000/user/profile/${email}`);
+            const res = await axios.get(global.APIUrl+`/user/profile/${email}`);
             setProfile(res.data);
         } catch (error) {
             console.error('Error fetching profile:', error);
@@ -69,7 +84,7 @@ function Profile() {
 
     const handleDeleteProfile = async () => {
         try {
-            const res = await axios.delete(`http://localhost:5000/user/delete/${email}`);
+            const res = await axios.delete(global.APIUrl+`/user/delete/${email}`);
             sessionStorage.setItem('cusmail', 'empty');
             window.location.href = "/";
         } catch (error) {
@@ -92,7 +107,7 @@ function Profile() {
 
             console.log(editData);
 
-            const res = await axios.put(`http://localhost:5000/user/update`, editData);
+            const res = await axios.put(global.APIUrl+`/user/update`, editData);
 
             Swal.fire({
                 title: "Success!",
@@ -109,6 +124,41 @@ function Profile() {
         }
     };
 
+    const handleEditProfile = () => {
+        setEditModalOpen(true);
+    };
+
+    const handleModalClose = () => {
+        setEditModalOpen(false);
+    };
+
+    const handleSaveChanges = async () => {
+        try {
+            var data = {
+                name: edtname,                
+                phone: edtphone,
+                email:profileDetails.email,               
+                password: profileDetails.password,                
+                isLoyal: profileDetails.isLoyal,
+                points: profileDetails.points,
+                userType: profileDetails.userType
+            };
+            console.log(data);
+            const res = await axios.put(global.APIUrl+`/user/update`, data);
+            Swal.fire({
+                title: "Success!",
+                text: "Profile Updated Successfully",
+                icon: 'success',
+                confirmButtonText: "OK"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.reload();
+                }
+            });
+        } catch (error) {
+            console.error('Error updating profile:', error);
+        }
+    };
 
     return (
         <div className={classes.root}>
@@ -176,7 +226,7 @@ function Profile() {
                                     onClick={handleLoyalProfile}
                                     style={{ backgroundColor: '#009688', color: '#fff' }}
                                 >
-                                    Active Loyalty
+                                    Activate Loyalty
                                 </Button>
                                 &nbsp;
                                 &nbsp;
@@ -190,9 +240,61 @@ function Profile() {
                         >
                             Delete Profile
                         </Button>
+                        &nbsp;
+                        &nbsp;
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            className={classes.button}
+                            onClick={handleEditProfile}
+                        >
+                            Edit Profile
+                        </Button>
                     </Paper>
                 </Grid>
             </Grid>
+            <Modal
+                open={editModalOpen}
+                onClose={handleModalClose}
+                aria-labelledby="simple-modal-title"
+                aria-describedby="simple-modal-description"
+            >
+                <div className={classes.modalPaper}>
+                    <Typography variant="h6" id="modal-title">
+                        Edit Profile
+                    </Typography>
+                    <form>
+                        <TextField
+                            id="name"
+                            name="name"
+                            label="Name"
+                            value={edtname}
+                            onChange={(e) => setEdtname(e.target.value)}
+                            fullWidth
+                            margin="normal"
+                            required
+                        />                       
+                        <TextField
+                            id="phone"
+                            name="phone"
+                            label="Phone"
+                            value={edtphone}
+                            onChange={(e) => setEdtphone(e.target.value)}
+                            fullWidth
+                            margin="normal"
+                            type='number'
+                            required
+                        />
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={handleSaveChanges}
+                        >
+                            Save Changes
+                        </Button>
+                    </form>
+                </div>
+            </Modal>
             <br />
             <br />
             <Footer />
