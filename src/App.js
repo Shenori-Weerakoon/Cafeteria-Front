@@ -21,6 +21,9 @@ import CashOnDelivery from './components/Customer/CashOnDelivery';
 import OrderPaymentManage from './components/Admin/OrderPaymentManage';
 import Payment from './components/Customer/Payment';
 import Orders from './components/Customer/Orders';
+import SupportTicket from './components/Admin/SupportTicket';
+import Feeback from './components/Customer/Feeback';
+import Support from './components/Customer/Support';
 
 
 
@@ -51,6 +54,9 @@ function App() {
         <Route path="/CashOnDelivery" element={<CashOnDelivery/>} />
         <Route path="/OrderPaymentManage" element={<OrderPaymentManage />} />
         <Route path="/Orders" element={<Orders/>} />
+        <Route path="/SupportTicket" element={<SupportTicket />} />
+        <Route path="/Feeback" element={<Feeback/>} />
+        <Route path="/Support" element={<Support/>} />
 
 
       </Routes>
