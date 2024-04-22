@@ -11,6 +11,13 @@ import PromotionManage from './components/Admin/PromotionManage';
 import PromotionForm from './components/Admin/PromotionForm';
 import HomePage from './components/Customer/HomePage';
 import CheckoutPage from './components/Customer/Checkout';
+import AdminLogin from './components/Admin/AdminLogin';
+import AdminSignUp from './components/Admin/AdminSignUp';
+import Employee from './components/Admin/EmployeeManage';
+import EmployeeForm from './components/Admin/EmployeeForm';
+import EmployeeLogin from './components/Admin/EmployeeLogin';
+import EmployeeForm from './components/Admin/EmployeeForm';
+
 function App() {
   return (
     <Router>
@@ -28,6 +35,12 @@ function App() {
         <Route path="/PromotionManage" element={<PromotionManage />} />
         <Route path="/" element={<HomePage />} />
         <Route path="/CheckoutPage" element={<CheckoutPage/>} />
+        <Route path="/SalaryForm" element={<SalaryForm />} />
+        <Route path="/EmployeeForm" element={<EmployeeForm />} />
+        <Route path="/Employee" element={<Employee />} />        
+        <Route path="/AdminLogin" element={<AdminLogin />} />
+        <Route path="/AdminSignUp" element={<AdminSignUp />} />
+        <Route path="/EmployeeLogin" element={<EmployeeLogin/>} />
 
 
       </Routes>
