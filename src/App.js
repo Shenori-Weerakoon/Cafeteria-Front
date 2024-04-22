@@ -7,8 +7,10 @@ import Profile from './components/Customer/Profile';
 import Customer from './components/Admin/Customer';
 import InventoryManage from './components/Admin/InventoryManage';
 import InventoryForm from './components/Admin/InventoryForm';
-
-
+import PromotionManage from './components/Admin/PromotionManage';
+import PromotionForm from './components/Admin/PromotionForm';
+import HomePage from './components/Customer/HomePage';
+import CheckoutPage from './components/Customer/Checkout';
 function App() {
   return (
     <Router>
@@ -22,6 +24,10 @@ function App() {
         <Route path="/Customer" element={<Customer />} />
         <Route path="/InventoryManage" element={<InventoryManage />} />
         <Route path="/InventoryForm" element={<InventoryForm />} />
+        <Route path="/PromotionForm" element={<PromotionForm />} />
+        <Route path="/PromotionManage" element={<PromotionManage />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/CheckoutPage" element={<CheckoutPage/>} />
 
 
       </Routes>
