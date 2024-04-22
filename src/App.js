@@ -1,5 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import MenuManage from './components/Admin/MenuManage';
+import SupportTicket from './components/Admin/SupportTicket';
+import Feeback from './components/Customer/Feeback';
 import MenuForm from './components/Admin/MenuForm';
 import SignUp from './components/Customer/SignUp';
 import LogIn from './components/Customer/Login';
@@ -27,12 +29,18 @@ import Support from './components/Customer/Support';
 
 
 
+
 function App() {
   return (
     <Router>
       <Routes>        
         
         <Route path="/MenuManage" element={<MenuManage />} />
+
+        <Route path="/Feeback" element={<Feeback/>} />
+        <Route path="/Support" element={<Support/>} />
+        
+
         <Route path="/MenuForm" element={<MenuForm />} /> 
         <Route path="/Login" element={<LogIn />} />
         <Route path="/Register" element={<SignUp />} />
@@ -57,6 +65,7 @@ function App() {
         <Route path="/SupportTicket" element={<SupportTicket />} />
         <Route path="/Feeback" element={<Feeback/>} />
         <Route path="/Support" element={<Support/>} />
+
 
 
       </Routes>
