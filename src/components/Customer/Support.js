@@ -14,6 +14,7 @@ import Swal from 'sweetalert2';
 
 const useStyles = makeStyles((theme) => ({
     root: {
+        backgroundColor:'#B7EBBD',
         flexGrow: 1,
     },
     header: {
