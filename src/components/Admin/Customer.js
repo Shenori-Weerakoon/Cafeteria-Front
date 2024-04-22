@@ -37,8 +37,8 @@ const Customer = () => {
     return (
         <div style={{ display: 'flex', height: '100vh', maxWidth: '161vh' }}>
             <Sidebar />
-            <div style={{ flexGrow: 1, padding: 20, backgroundColor: '#ffffff', display: 'flex', flexDirection: 'column' }}>
-                <AppBar position="static" sx={{ backgroundColor: '#1c2331', boxShadow: 'none' }}>
+            <div style={{ flexGrow: 1, padding: 20, backgroundColor: '#B7EBBD', display: 'flex', flexDirection: 'column' }}>
+                <AppBar position="static" sx={{ backgroundColor: '#EDAF28', boxShadow: 'none' }}>
                     <Toolbar>
                         <Typography variant="h6" component="div">
                             Customer Management
