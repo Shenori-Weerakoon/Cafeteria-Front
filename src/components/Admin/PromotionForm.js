@@ -120,8 +120,8 @@ const PromotionForm = () => {
     };
 
     return (
-        <div style={{ height: '100vh', paddingTop: '64px', backgroundColor: '#f4f4f4' }}>
-            <AppBar position="fixed" style={{ backgroundColor: '#1c2331', boxShadow: 'none' }}>
+        <div style={{ height: '100vh', paddingTop: '64px', backgroundColor: '#B7EBBD' }}>
+            <AppBar position="fixed" style={{ backgroundColor: '#EDAF28', boxShadow: 'none' }}>
                 <Toolbar>
                     {(info.editBtn) ? (
                         <Typography variant="h6" style={{ flexGrow: 1, fontWeight: 'bold' }}>
@@ -138,7 +138,7 @@ const PromotionForm = () => {
                             Edit
                         </Button>
                     ) : (
-                        <Button variant="contained" color="primary" onClick={handleAddItem}>
+                        <Button variant="contained"sx={{bgcolor:'#009637',color:'#ffffff'}}   onClick={handleAddItem}>
                             Add
                         </Button>
                     )}
