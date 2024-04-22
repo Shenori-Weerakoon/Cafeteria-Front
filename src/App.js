@@ -4,6 +4,7 @@ import MenuForm from './components/Admin/MenuForm';
 import SignUp from './components/Customer/SignUp';
 import LogIn from './components/Customer/Login';
 import Profile from './components/Customer/Profile';
+import Customer from './components/Admin/Customer';
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <Route path="/Login" element={<LogIn />} />
         <Route path="/Register" element={<SignUp />} />
         <Route path="/Profile" element={<Profile/>} />
+        <Route path="/Customer" element={<Customer />} />
 
 
       </Routes>
