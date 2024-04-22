@@ -158,12 +158,13 @@ const Payment = () => {
 
     return (
         <div>
+             <div style ={{height:'150vh', paddingTop:'64px',backgroundColor:'#B7EBBD'}}></div>
             <AppBar position="static" sx={{ backgroundColor: 'rgba(0, 0, 0, 0.87)' }}>
                 <Toolbar>
                     <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
                         Payment Page
                     </Typography>
-                    <Typography variant="h5" style={{ marginRight: '1rem', color: '#FFA500', textDecoration: 'none', fontWeight: 'bold' }}>
+                    <Typography variant="h5" style={{ marginRight: '1rem', color: '#ffffff', textDecoration: 'none', fontWeight: 'bold' }}>
                         Caravan Fresh
                     </Typography>
                 </Toolbar>
@@ -290,7 +291,7 @@ const Payment = () => {
 
                             </Grid>
                             <Grid item xs={12}>
-                                <Button type="submit" variant="contained" color="primary">
+                                <Button type="submit" variant="contained" sx={{bgcolor:'#009637',color:'#ffffff'}}>
                                     Pay Now
                                 </Button>
                                 <Button onClick={handleCancel} variant="contained" color="primary" style={{ backgroundColor: 'red', marginLeft: '20px', }}>

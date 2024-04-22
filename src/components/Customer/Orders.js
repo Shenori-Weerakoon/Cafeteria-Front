@@ -98,4 +98,109 @@ function Orders() {
                 return 'black';
         }
     };
+
+    return(
+    <div className={classes.root}>
+    <Navbar />
+    <div className={classes.header}>
+        <Typography variant="h3" component="h1">Your Orders</Typography>
+    </div>
+    <hr style={{ width: 100 }}></hr>
+    <Typography variant="h4" component="h2" style={{ textAlign: 'center', marginTop: '50px' }}>Paid Orders</Typography>
+    <section className={classes.table}>
+        <TableContainer component={Paper}>
+            <Table aria-label="ticket table">
+                <TableHead>
+                    <TableRow>
+                        <TableCell>ID</TableCell>
+                        <TableCell>Price (LKR)</TableCell>
+                        <TableCell>Email</TableCell>
+                        <TableCell>Phone Number</TableCell>
+                        <TableCell>Issue Detail</TableCell>
+                        <TableCell>Status</TableCell>
+                        <TableCell>Action</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {paidorder.map((order) => (
+                        (order.email === email) && ( <TableRow key={order.id}>
+                            <TableCell>{order.orderID}</TableCell>
+                            <TableCell>{order.totalPrice}</TableCell>
+                            <TableCell>{order.email}</TableCell>
+                            <TableCell>{order.phoneNumber}</TableCell>
+                            <TableCell>{order.address}</TableCell>
+                            <TableCell>
+                                <Button
+                                    variant="outlined"
+                                    style={{ color: getStatusColor(order.status), borderColor: getStatusColor(order.status) }}
+                                    disabled
+                                >
+                                    {order.status}
+                                </Button>
+                            </TableCell>
+                            {order.status === 'Processing' ? (
+                                <TableCell>
+                                    <Button variant="contained" color="secondary" onClick={() => handleDeletePaid(order.orderID)}>
+                                        Delete
+                                    </Button>
+                                </TableCell>
+                            ) : (<TableCell> <Button variant="contained" color="secondary" onClick={() => handleDeletePaid(order.orderID)} disabled>
+                                Delete
+                            </Button> </TableCell>)}
+                        </TableRow>)                               
+                    ))}
+                </TableBody>
+            </Table>
+        </TableContainer>
+    </section>
+    <Typography variant="h4" component="h2" style={{ textAlign: 'center' }}>Cash On Delivery Orders</Typography>
+    <section className={classes.table}>
+        <TableContainer component={Paper}>
+            <Table aria-label="ticket table">
+                <TableHead>
+                    <TableRow>
+                        <TableCell>ID</TableCell>
+                        <TableCell>Price (LKR)</TableCell>
+                        <TableCell>Email</TableCell>
+                        <TableCell>Phone Number</TableCell>
+                        <TableCell>Issue Detail</TableCell>
+                        <TableCell>Status</TableCell>
+                        <TableCell>Action</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {codorder.map((order) => (
+                         (order.email === email) && (<TableRow key={order.id}>
+                            <TableCell>{order.orderID}</TableCell>
+                            <TableCell>{order.totalPrice}</TableCell>
+                            <TableCell>{order.email}</TableCell>
+                            <TableCell>{order.phoneNumber}</TableCell>
+                            <TableCell>{order.address}</TableCell>
+                            <TableCell>
+                                <Button
+                                    variant="outlined"
+                                    style={{ color: getStatusColor(order.status), borderColor: getStatusColor(order.status) }}
+                                    disabled
+                                >
+                                    {order.status}
+                                </Button>
+                            </TableCell>
+                            {order.status === 'Processing' ? (
+                                <TableCell>
+                                    <Button variant="contained" color="secondary" onClick={() => handleDeleteCod(order.orderID)}>
+                                        Delete
+                                    </Button>
+                                </TableCell>
+                            ) : (<TableCell> <Button variant="contained" color="secondary" onClick={() => handleDeleteCod(order.orderID)} disabled>
+                                Delete
+                            </Button> </TableCell>)}
+                        </TableRow>)                                
+                    ))}
+                </TableBody>
+            </Table>
+        </TableContainer>
+    </section>
+    <Footer />
+</div>
+);
 }    
