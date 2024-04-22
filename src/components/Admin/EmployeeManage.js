@@ -179,27 +179,27 @@ const EmployeeManage = () => {
     }
 
     return (
-        <div style={{ display: 'flex', height: '100vh', maxWidth: '161vh' }}>
+        <div style={{ display: 'flex', height: '200vh', maxWidth: '1000vh' }}>
             <Sidebar />
-            <div style={{ flexGrow: 1, padding: 20, backgroundColor: '#ecf0f1', display: 'flex', flexDirection: 'column' }}>
-                <AppBar position="static" sx={{ backgroundColor: '#1c2331', boxShadow: 'none' }}>
+            <div style={{ flexGrow: 1, padding: 20, backgroundColor: '#B7EBBD', display: 'flex', flexDirection: 'column' }}>
+                <AppBar position="static" sx={{ backgroundColor: '#EDAF28', boxShadow: 'none' }}>
                     <Toolbar>
                         <Typography variant="h6" component="div">
                             Employee Management
                         </Typography>
                         <div style={{ flexGrow: 1 }}></div>
-                        <Button variant="contained" color="primary" onClick={handleAddEmployee}>
+                        <Button variant="contained" sx ={{bgcolor:'#009637', color:'#ffffff'}} onClick={handleAddEmployee}>
                             Add New Employee
                         </Button>
                         &nbsp;
                         &nbsp;
-                         <Button variant="contained" color="secondary" onClick={handleAddSalary}>
+                         <Button variant="contained" sx ={{bgcolor:'#009637', color:'#ffffff'}} onClick={handleAddSalary}>
                             Salary
                         </Button>
                     </Toolbar>
                 </AppBar>
 
-                <div style={{ padding: 20, backgroundColor: '#ffffff', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', maxWidth: '161vh' }}>
+                <div style={{ padding: 20, backgroundColor: '#ffffff', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', maxWidth: '180vh' }}>
                     <Typography variant="h5" gutterBottom textAlign = "center"><b>
                         Employee Details</b>
                     </Typography>
@@ -207,7 +207,7 @@ const EmployeeManage = () => {
                         <DataGrid rows={employee} columns={columns} pageSize={5} />
                     </div>
                 </div>
-                <div style={{ padding: 20, backgroundColor: '#ffffff', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', maxWidth: '161vh' }}>
+                <div style={{ padding: 20, backgroundColor: '#ffffff', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', maxWidth: '180vh' }}>
                     <Typography variant="h5" gutterBottom textAlign = "center"><b>
                         Salary Details</b>
                     </Typography>

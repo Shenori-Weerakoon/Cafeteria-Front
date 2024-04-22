@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AdminLogin = () => {
+const EmployeeLogin = () => {
   const classes = useStyles();
 
   const [email, setEmail] = useState('');
@@ -65,7 +65,7 @@ const AdminLogin = () => {
           confirmButtonText: "OK",
           type: "success"
         });
-        window.location.href = "/Employee";
+        window.location.href = "/MenuManage";
       } else {
         await Swal.fire({
           title: "Error!",
@@ -74,7 +74,7 @@ const AdminLogin = () => {
           confirmButtonText: "OK",
           type: "success"
         });
-        window.location.href = "/AdminLogin";
+        window.location.href = "/EmployeeLogin";
       }
     } catch (error) {
       console.error(error);
@@ -85,14 +85,13 @@ const AdminLogin = () => {
         confirmButtonText: "OK",
         type: "success"
       });
-      window.location.href = "/AdminLogin";
+      window.location.href = "/EmployeeLogin";
     }
   };
 
   return (
     <div className={classes.root}>
-    <div style={{backgroundColor:'#f5f8c9'}}>
-    <Container component="main" maxWidth="xs" >
+    <Container component="main" maxWidth="xs">
       <CssBaseline />
       <br />
       <div className={classes.paper}>
@@ -100,8 +99,8 @@ const AdminLogin = () => {
           <LockOutlinedIcon style={{ fontSize: 40 }} />
         </Avatar>
         <br />
-        <Typography component="h1" variant="h5"><b>
-          Admin Login</b>
+        <Typography component="h1" variant="h5">
+          Employee Login
         </Typography>
         <br />
         <Card className={classes.card}>
@@ -146,26 +145,13 @@ const AdminLogin = () => {
                 Login
               </Button>
             </form>
-          </CardContent>
-          <CardContent>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Typography variant="body2">
-                  Don't have an account?{" "}
-                  <Link href="AdminSignUp" variant="body2">
-                    Sign Up
-                  </Link>
-                </Typography>
-              </Grid>
-            </Grid>
-          </CardContent>
+          </CardContent>        
         </Card>
       </div>
       <br />
     </Container>
     </div>
-    </div>
   );
 }
 
-export default AdminLogin;
+export default EmployeeLogin;

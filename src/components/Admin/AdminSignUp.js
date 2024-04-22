@@ -6,6 +6,17 @@ import Swal from 'sweetalert2';
 
 
 const useStyles = makeStyles((theme) => ({
+    root: {
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundImage: `url(${'https://static.vecteezy.com/system/resources/previews/005/140/844/non_2x/brown-wooden-table-on-coffee-shop-or-restaurant-background-free-photo.jpg'})`, // Set background image URL
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
+      },
     paper: {
         marginTop: theme.spacing(3),
         display: 'flex',
@@ -131,6 +142,7 @@ const AdminSignUp = () => {
     };
 
     return (
+        <div className={classes.root}>
         <div style={{backgroundColor:'#f5f8c9'}}>
         <Container component="main" maxWidth="xs">
             <CssBaseline />
@@ -268,6 +280,7 @@ const AdminSignUp = () => {
                 </Card>
             </div>
         </Container>
+        </div>
         </div>
     );
 };

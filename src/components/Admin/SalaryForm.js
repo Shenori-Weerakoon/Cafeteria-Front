@@ -83,14 +83,14 @@ const SalaryForm = () => {
     }, [newSalary.salary, newSalary.days]);
 
     return (
-        <div style={{ height: '100vh', paddingTop: '64px', backgroundColor: '#f4f4f4' }}>
-            <AppBar position="fixed" style={{ backgroundColor: '#1c2331', boxShadow: 'none' }}>
+        <div style={{ height: '100vh', paddingTop: '64px', backgroundColor: '#B7EBBD' }}>
+            <AppBar position="fixed" style={{ backgroundColor: '#EDAF28', boxShadow: 'none' }}>
                 <Toolbar>
                     <Typography variant="h6" style={{ flexGrow: 1, fontWeight: 'bold' }}>
                         Add Employee Salary
                     </Typography>
                     <div style={{ flexGrow: 1 }}></div>
-                    <Button variant="contained" color="primary" onClick={handleAddSalary}>
+                    <Button variant="contained" sx ={{bgcolor:'#009637', color:'#ffffff'}} onClick={handleAddSalary}>
                         Add
                     </Button>
                     <Button variant="contained" color="error" onClick={handleCancel} style={{ marginLeft: '8px' }}>

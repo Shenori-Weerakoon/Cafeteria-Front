@@ -174,8 +174,8 @@ const AddNewEmployeeForm = () => {
     };
 
     return (
-        <div style={{ height: '100vh', paddingTop: '64px', backgroundColor: '#f4f4f4' }}>
-            <AppBar position="fixed" style={{ backgroundColor: '#1c2331', boxShadow: 'none' }}>
+        <div style={{ height: '150vh', paddingTop: '64px', backgroundColor: '#B7EBBD' }}>
+            <AppBar position="fixed" style={{ backgroundColor: '#EDAF28', boxShadow: 'none' }}>
                 <Toolbar>
                 {(info.editBtn) ? (
                         <Typography variant="h6" style={{ flexGrow: 1, fontWeight: 'bold' }}>
@@ -192,7 +192,7 @@ const AddNewEmployeeForm = () => {
                             Edit Employee
                         </Button>
                     ) : (
-                        <Button variant="contained" color="primary" onClick={handleAddEmployee}>
+                        <Button variant="contained" sx ={{bgcolor:'#009637', color:'#ffffff'}} onClick={handleAddEmployee}>
                            Add Employee
                         </Button>
                     )}
@@ -202,7 +202,7 @@ const AddNewEmployeeForm = () => {
                 </Toolbar>
             </AppBar>
             <Container maxWidth="md" style={{ marginTop: '20px' }}>
-                <div style={{ backgroundColor: '#dedcdc', padding: '24px', borderRadius: '8px', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)' }}>
+                <div style={{ backgroundColor: '#ffffff', padding: '24px', borderRadius: '8px', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)' }}>
                     <Grid container spacing={3}>
                         <Grid item xs={12}>
                             <Typography variant="h5" style={{ marginBottom: '10px', textAlign:'center'}}><b>
