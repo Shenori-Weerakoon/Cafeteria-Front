@@ -5,6 +5,8 @@ import SignUp from './components/Customer/SignUp';
 import LogIn from './components/Customer/Login';
 import Profile from './components/Customer/Profile';
 import Customer from './components/Admin/Customer';
+import InventoryManage from './components/Admin/InventoryManage';
+import InventoryForm from './components/Admin/InventoryForm';
 
 
 function App() {
@@ -18,6 +20,8 @@ function App() {
         <Route path="/Register" element={<SignUp />} />
         <Route path="/Profile" element={<Profile/>} />
         <Route path="/Customer" element={<Customer />} />
+        <Route path="/InventoryManage" element={<InventoryManage />} />
+        <Route path="/InventoryForm" element={<InventoryForm />} />
 
 
       </Routes>
