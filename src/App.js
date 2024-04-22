@@ -17,6 +17,12 @@ import Employee from './components/Admin/EmployeeManage';
 import EmployeeForm from './components/Admin/EmployeeForm';
 import EmployeeLogin from './components/Admin/EmployeeLogin';
 import EmployeeForm from './components/Admin/EmployeeForm';
+import CashOnDelivery from './components/Customer/CashOnDelivery';
+import OrderPaymentManage from './components/Admin/OrderPaymentManage';
+import Payment from './components/Customer/Payment';
+import Orders from './components/Customer/Orders';
+
+
 
 function App() {
   return (
@@ -41,6 +47,10 @@ function App() {
         <Route path="/AdminLogin" element={<AdminLogin />} />
         <Route path="/AdminSignUp" element={<AdminSignUp />} />
         <Route path="/EmployeeLogin" element={<EmployeeLogin/>} />
+        <Route path="/Payment" element={<Payment/>} />
+        <Route path="/CashOnDelivery" element={<CashOnDelivery/>} />
+        <Route path="/OrderPaymentManage" element={<OrderPaymentManage />} />
+        <Route path="/Orders" element={<Orders/>} />
 
 
       </Routes>
