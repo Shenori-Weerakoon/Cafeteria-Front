@@ -61,8 +61,6 @@ const SideBar = () => {
         }}
       >
         <Toolbar sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 100 }}>
-        <Link to="/" style={{ ...isActive('/'), textDecoration: 'none' }}>Caravan <span style={{ fontFamily: 'Zekton, sans-serif' }}>Fresh</span>
-          </Link>
           <Avatar
             alt="Company Logo"
             src={ZperxLogo}
