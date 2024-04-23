@@ -138,7 +138,7 @@ const CashOnDelivery = () => {
         }
     };
     return (
-        <div style ={{height:'150vh', paddingTop:'64px',backgroundColor:'#B7EBBD'}}>
+        <div>
             <AppBar position="static" sx={{ backgroundColor: '#EDAF28' }}>
                 <Toolbar>
                     <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
