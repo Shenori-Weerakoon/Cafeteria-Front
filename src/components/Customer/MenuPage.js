@@ -74,7 +74,18 @@ const MenuPage = () => {
                 text: 'Please enter a valid quantity greater than zero.',
             });
             return;
-        }
+    }
+
+    const newItem = { ...menuItem, quantity: itemQuantity };
+        const updatedCart = [...cartItems, newItem];
+        setCartItems(updatedCart);
+        localStorage.setItem('cartItems', JSON.stringify(updatedCart));
+        console.log('Cart Items:', updatedCart);
+        Swal.fire({
+            icon: 'success',
+            title: 'Added to Cart!',
+            text: `${menuItem.itemName} has been added to your cart.`,
+        });
 
     };
 
