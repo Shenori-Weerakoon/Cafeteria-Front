@@ -14,15 +14,10 @@ import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
 import AllInboxIcon from '@mui/icons-material/AllInbox';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import ZperxLogo from '../Images/Zperx.png';
-import { Link, useLocation} from 'react-router-dom';
 
 const SideBar = () => {
   const [selectedItem, setSelectedItem] = useState('Dashboard');
   const hradmin = sessionStorage.getItem("hradmin");
-  const location = useLocation();
-  const isActive = (path) => {
-    return location.pathname === path ? { color: '#FFA500', fontWeight: 'bold' } : { color: '#fff' };
-  };
 
 
   useEffect(() => {
