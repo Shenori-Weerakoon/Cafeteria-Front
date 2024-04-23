@@ -158,7 +158,6 @@ const Payment = () => {
 
     return (
         <div>
-             <div style ={{height:'150vh', paddingTop:'64px',backgroundColor:'#B7EBBD'}}></div>
             <AppBar position="static" sx={{ backgroundColor: 'rgba(0, 0, 0, 0.87)' }}>
                 <Toolbar>
                     <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
