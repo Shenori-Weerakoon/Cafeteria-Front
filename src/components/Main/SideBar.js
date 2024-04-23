@@ -17,6 +17,8 @@ import ZperxLogo from '../Images/Zperx.png';
 
 const SideBar = () => {
   const [selectedItem, setSelectedItem] = useState('Dashboard');
+  const hradmin = sessionStorage.getItem("hradmin");
+
 
   useEffect(() => {
     const storedSelectedItem = window.sessionStorage.getItem('selectedItem');
@@ -32,6 +34,7 @@ const SideBar = () => {
   };
 
   const handleLogout = () => {
+    sessionStorage.setItem("hradmin", false);
     window.location.href = `/`;
 
   };
@@ -47,7 +50,7 @@ const SideBar = () => {
           '& .MuiDrawer-paper': {
             width: 240,
             boxSizing: 'border-box',
-            backgroundColor: '#A1761B', 
+            backgroundColor: '#009637', 
             color: '#ffffff', 
           },
         }}
@@ -60,6 +63,8 @@ const SideBar = () => {
           />
         </Toolbar>
         <List>
+        {hradmin === 'true' ? (
+          <>
           <ListItem
             button
             selected={selectedItem === 'Employee'}
@@ -82,6 +87,9 @@ const SideBar = () => {
             </ListItemIcon>
             <ListItemText primary="Menu Management" />
           </ListItem>
+          </>
+        ):(  
+          <>
           <ListItem
             button
             selected={selectedItem === 'InventoryManage'}
@@ -126,6 +134,19 @@ const SideBar = () => {
             </ListItemIcon>
             <ListItemText primary="Order Payment Management" />
           </ListItem>
+          <ListItem
+          button
+          selected={selectedItem === 'OrderPaymentManage'}
+          onClick={() => handleItemClick('OrderPaymentManage')}
+          sx={{ '&:hover': { backgroundColor: '#2c3e50' } }}
+        >
+          <ListItemIcon>
+                  <AllInboxIcon sx={{ color: '#ecf0f1' }} />
+                </ListItemIcon>
+                <ListItemText primary="Order Payment Management" />
+                </ListItem>
+            </>
+          )}
         </List>
         <List sx={{ marginTop: 'auto' }}>
           <ListItem button onClick={handleLogout} sx={{ '&:hover': { backgroundColor: '#EDAF28' } }}>
