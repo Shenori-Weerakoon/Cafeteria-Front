@@ -12,6 +12,33 @@ import Footer from '../Main/Footer';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
+const useStyles = makeStyles((theme) => ({
+    root: {
+        flexGrow: 1,
+    },
+    header: {
+        backgroundColor: theme.palette.dark,
+        color: theme.palette.primary,
+        paddingTop: theme.spacing(4),
+        textAlign: 'center',
+    },
+    section: {
+        marginTop: theme.spacing(1),
+        marginBottom: theme.spacing(10),
+        marginLeft: theme.spacing(30),
+        marginRight: theme.spacing(30),
+    },
+    form: {
+        marginTop: theme.spacing(3),
+    },
+    table: {
+        marginTop: theme.spacing(3),
+        paddingLeft: '30px',
+        paddingRight: '30px',
+        paddingBottom: '80px',
+    },
+}));
+
 function Orders() {                                         
     const classes = useStyles();
     const email = sessionStorage.getItem("cusmail");
