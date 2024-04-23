@@ -1,8 +1,13 @@
 import React from 'react';
 import { AppBar, Toolbar, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useLocation} from 'react-router-dom';
 
 const Navbar = () => {
+  const location = useLocation();
+
+  const isActive = (path) => {
+    return location.pathname === path ? { color: '#FFA500', fontWeight: 'bold' } : { color: '#fff' };
+  };
   const handleLogout = () => {
     sessionStorage.setItem('cusmail', 'empty');
     window.location.href = '/';
