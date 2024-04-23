@@ -63,6 +63,8 @@ const Footer = () => {
                         <Link to="#" className={classes.link}>Affiliate</Link>
                         <br />
                         <a href="AdminLogin" className={classes.link}>Admin</a>
+                        <br />                        
+                        <a href="EmployeeLogin" className={classes.link}>Employee</a>
                         <br />
                         <Link to="#" className={classes.link}>Privacy Policy</Link>
                         <br />
