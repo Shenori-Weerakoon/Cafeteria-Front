@@ -230,4 +230,6 @@ function Orders() {
     <Footer />
 </div>
 );
-}    
+}   
+
+export default Orders;
