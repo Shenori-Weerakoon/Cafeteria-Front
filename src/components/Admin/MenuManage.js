@@ -39,7 +39,6 @@ const MenuManage = () => {
         }
     };
 
-
 const handleAddMenu = () => {
     window.location.href = "/MenuForm";
 };
@@ -126,6 +125,12 @@ const columns = [
                         <CheckIcon />
                     </IconButton>
                 )}
+                <IconButton color="primary" onClick={() => handleEdit(params.row)}>
+                        <EditIcon />
+                    </IconButton>
+                    <IconButton color="error" onClick={() => handleDeleteMenu(params.row.itemId)}>
+                        <DeleteIcon />
+                    </IconButton>
                 
             </div>
         ),
