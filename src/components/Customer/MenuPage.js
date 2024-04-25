@@ -47,6 +47,8 @@ const MenuPage = () => {
     const [cartItems, setCartItems] = useState([]);
     const [quantity, setQuantity] = useState({});
     const [menu, setMenu] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [searchResults, setSearchResults] = useState([]);
 
     useEffect(() => {
         fetchMenuDetails();
@@ -97,6 +99,15 @@ const MenuPage = () => {
         }));
     };
 
+    const handleSearch = async () => {
+        try {
+            const response = await axios.get(`/api/menuItems/search?query=${searchQuery}`);
+            setSearchResults(response.data);
+        } catch (error) {
+            console.error('Error searching menu items:', error);
+        }
+    };
+
 
     return (
         <div>
@@ -106,6 +117,19 @@ const MenuPage = () => {
                     Menu Items
                     <hr style={{ width: '150px' }} />
                 </Typography>
+
+                <input 
+                    type="text" 
+                    value={searchQuery} 
+                    onChange={(e) => setSearchQuery(e.target.value)} 
+                    placeholder="Search for items..." 
+                />
+                    <button onClick={handleSearch}>Search</button>
+                <ul>
+                    {searchResults.map(item => (
+                    <li key={item.id}>{item.name}</li>
+                    ))}
+                </ul>
 
                 <Grid container spacing={4} style={{marginBottom:'153px'}}>
                     {menu.map((menuItem) => (
@@ -128,16 +152,20 @@ const MenuPage = () => {
                                             Calorie: {menuItem.calorieCount}
                                         </Typography>
                                         <Typography variant="body1" color="textPrimary" style={{ fontWeight: 'bold' }}>
-                                            Price: ${menuItem.price}
+                                            Price: Rs. {menuItem.price}
                                         </Typography>
                                         <br />
                                         <div>
+
+                                            {/* When clicked, it triggers the handleQtyChange function with an updated quantity value calculated by subtracting 1 from the current quantity. 
+                                            The Math.max(quantity[menuItem.id] - 1, 0) ensures that the quantity cannot go below zero. */}
                                             <IconButton
                                                 aria-label="remove"
                                                 onClick={() => handleQtyChange({ target: { value: Math.max(quantity[menuItem.id] - 1, 0) } }, menuItem)}
                                             >
                                                 <RemoveIcon />
                                             </IconButton>
+
                                             <TextField
                                                 className={classes.qtyField}
                                                 type="number"
@@ -146,6 +174,9 @@ const MenuPage = () => {
                                                 value={quantity[menuItem.id] || 0}
                                                 onChange={(e) => handleQtyChange(e, menuItem)}
                                             />
+
+                                            {/* When clicked, it triggers the handleQtyChange function with an updated quantity value calculated by adding 1 to the current quantity. 
+                                            (quantity[menuItem.id] || 0) ensures that if the quantity is not defined (e.g., the first time the item is added to the cart), it starts from 0. */}
                                             <IconButton
                                                 aria-label="add"
                                                 className={classes.addButton}
@@ -156,7 +187,7 @@ const MenuPage = () => {
                                         </div>
                                         <Button
                                             variant="contained"
-                                            color="primary"
+                                            color="#EDAF28"
                                             className={classes.addToCartButton}
                                             onClick={() => handleAddToCart(menuItem)}
                                         >
