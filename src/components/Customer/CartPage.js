@@ -149,10 +149,10 @@ const CartPage = () => {
         {cartItems.length > 0 && (
           <div style={{ marginLeft: '160px', marginRight: '160px' }}>
             <Typography variant="h6" gutterBottom className={classes.totalAmount}>
-              Total Price: ${calculateTotal()}
+              Total Price: Rs. {calculateTotal()}
             </Typography>
             <Typography variant="h6" gutterBottom className={classes.totalAmount}>
-              Total Calories: {calculateCalories()}
+              Total Calories: {calculateCalories()} kCal
             </Typography>
             <Grid container spacing={2}>
               <Grid item>
