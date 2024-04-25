@@ -15,9 +15,9 @@ import Swal from 'sweetalert2';
 import { Avatar } from '@mui/material';
 
 const MenuManage = () => {
-    const [menu, setMenu] = useState([]);
+    const [menu, setMenu] = useState([]); //initializing status to menu-array
 
-    useEffect(() => {
+    useEffect(() => { //useEffect for fetch data, similar to componentDidMount
         fetchMenuDetails();
         const editBtn = false;     
         const data = {            
@@ -26,10 +26,10 @@ const MenuManage = () => {
         localStorage.setItem('selectedMenu', JSON.stringify(data));
     }, []);
 
-    const fetchMenuDetails = async () => {
+    const fetchMenuDetails = async () => {//asynchronous arrow function
         try {
-            const response = await axios.get(global.APIUrl + '/menuItem/allMenuItem');
-            const menusWithId = response.data.map((menu, index) => ({
+            const response = await axios.get(global.APIUrl + '/menuItem/allMenuItem');//wait until get request recieves a response from the server-fetch menu details
+            const menusWithId = response.data.map((menu, index) => ({ //iteration: map
                 id: index + 1,
                 ...menu
             }));
@@ -38,9 +38,9 @@ const MenuManage = () => {
             console.error('Error fetching menu details:', error);
         }
     };
-
+//redirecting to the menu form
 const handleAddMenu = () => {
-    window.location.href = "/MenuForm";
+    window.location.href = "/MenuForm"; //change URL of the current window to the menuForm
 };
 
 const handleUpdateMenuItem = (selectedMenuItem) => {
@@ -75,6 +75,8 @@ const handleDeleteMenu = (itemId) => {
 
 };
 
+/*prepares the necessary data (including the menu item to be edited) and stores it in the browser's local storage. 
+Then, it redirects the user to the MenuForm page where they can perform the editing operation */
 const handleEdit = (selectedMenu) => {
     const editBtn = true;
     const data = {
@@ -190,3 +192,16 @@ return(
 
 
 export default MenuManage;
+
+/*
+<IconButton>
+Default
+inherit
+primary
+secondary
+action
+error
+warning
+info
+success
+*/

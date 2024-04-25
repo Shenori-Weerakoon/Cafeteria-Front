@@ -27,7 +27,7 @@ const MenuForm = () => {
         mnf: "",
         createdAt: "",
         updatedAt: "",
-        __v: 0
+        __v: 0 //version number
     })
 
     const info = JSON.parse(localStorage.getItem("selectedMenu"));
@@ -162,13 +162,13 @@ const MenuForm = () => {
             isValid = false;
         }
 
-        if (!newItem.calorieCount.toString().trim()) {
-            errors.calorieCount = 'Calorie Count is required';
+        if (!newItem.calorieCount.toString().trim() || newItem.calorieCount <= 0 ){
+            errors.calorieCount = 'Calorie Count is required and must be a positive number';
             isValid = false;
         }
 
-        if (!newItem.price.toString().trim()) {
-            errors.price = 'Price is required';
+        if (!newItem.price.toString().trim() || newItem.price <= 0) {
+            errors.price = 'Price is required and must be a positive number';
             isValid = false;
         }
 
@@ -227,7 +227,7 @@ const MenuForm = () => {
             </AppBar>
             <Container maxWidth="md" style={{ marginTop: '20px', paddingBottom: '20px' }}>
                 <div style={{ backgroundColor: '#fff', padding: '24px', borderRadius: '8px', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)' }}>
-                    <Grid container spacing={3}>
+                    <Grid container spacing={2}>
                         <Grid item xs={12}>
                             {(info.editBtn) ? (
                                 <Typography variant="h6" style={{ marginBottom: '10px' }}>
@@ -240,7 +240,7 @@ const MenuForm = () => {
                             )}
                             <hr />
                         </Grid>
-                        <Grid item xs={12}>
+                        <Grid item xs={5}>
                             <TextField
                                 label="Item ID"
                                 fullWidth
@@ -252,7 +252,7 @@ const MenuForm = () => {
                                 disabled
                             />
                         </Grid>
-                        <Grid item xs={12}>
+                        <Grid item xs={5}>
                             <FormControl fullWidth error={!!errors.inventoryItem}>
                                 <InputLabel>Inventory Item</InputLabel>
                                 <Select
