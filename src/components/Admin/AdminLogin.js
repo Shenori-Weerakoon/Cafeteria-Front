@@ -58,6 +58,7 @@ const AdminLogin = () => {
       const response = await axios.post(global.APIUrl + "/admin/login", log);
       if (response.data.message === true) {
         sessionStorage.setItem("admin_name", email);
+        sessionStorage.setItem("hradmin", true);
         await Swal.fire({
           title: "Success!",
           text: "Login Success",
