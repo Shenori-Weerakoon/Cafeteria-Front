@@ -13,6 +13,7 @@ import DoneIcon from '@mui/icons-material/Done';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { TextField, Button } from '@mui/material';
 
 
 const OrderPaymentManage = () => {
@@ -288,28 +289,46 @@ const OrderPaymentManage = () => {
         }
     };
 
+    const handlePaymentSearch = () => {
+        const filteredPaymentItem = paidorder.filter((order) => 
+            order.city.toLowerCase().includes(paymentSearch.toLowerCase())
+        );
+        setPaidOrder(filteredPaymentItem);
+    }
+
 
 
     return (
-        <div style={{ display: 'flex', height: '100vh', maxWidth: '161vh' }}>
+        <div style={{ display: 'flex', height: '00vh', maxWidth: '161vh' }}>
             <Sidebar />
-            <div style={{ flexGrow: 1, padding: 20, backgroundColor: '#B7EBBD', display: 'flex', flexDirection: 'column' }}>
-                <AppBar position="static" sx={{ backgroundColor: '#EDAF28', boxShadow: 'none' }}>
+            <div style={{ flexGrow: 1, padding: 20, backgroundColor: '#ecf0f1', display: 'flex', flexDirection: 'column' }}>
+                <AppBar position="static" sx={{ backgroundColor: '#1c2331', boxShadow: 'none' }}>
                     <Toolbar>
-                        <Typography variant="h4" component="div">
+                        <Typography variant="h6" component="div">
                             Order Payment Management
                         </Typography>
                     </Toolbar>
                 </AppBar>
-                <div style={{ padding: 20, backgroundColor: '#d3d3d3', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', maxWidth: '161vh' }}>
+                <div style={{ padding: 20, backgroundColor: '#ffffff', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', maxWidth: '161vh' }}>
                     <Typography variant="h5" gutterBottom>
                         Paid Orders
                     </Typography>
+                    <TextField
+                    label = "Search"
+                    variant="outlined"
+                    size="small"
+                    style={{marginBottom: 10}}
+                    value={paymentSearch}
+                    onChange={(e) => setPaymentSearch(e.target.value)}></TextField>
+
+                <Button variant="contained" sx ={{bgcolor:'#B7EBBD', color:'#000000'}} onClick={handlePaymentSearch}>
+                    Search
+                </Button>
                     <div style={{ width: '100%' }}>
                         <DataGrid rows={paidorder} columns={columns} pageSize={5} />
                     </div>
                 </div>
-                <div style={{ padding: 20, backgroundColor: '#d3d3d3', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', maxWidth: '161vh' }}>
+                <div style={{ padding: 20, backgroundColor: '#ffffff', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', maxWidth: '161vh' }}>
                     <Typography variant="h5" gutterBottom>
                         Cash On Delivery Orders
                     </Typography>
