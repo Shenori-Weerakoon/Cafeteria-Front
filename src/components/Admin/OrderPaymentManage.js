@@ -350,11 +350,13 @@ const OrderPaymentManage = () => {
                             Download
                             </button>
 
-                            <div ref={ComponentsRef} style={{ width: '100%' }}></div>
+                            <div ref={ComponentsRef} style={{ width: '100%' }}>
 
                     <div style={{ width: '100%' }}>
                         <DataGrid rows={paidorder} columns={columns} pageSize={5} />
                     </div>
+                    
+                </div>
                 </div>
                 <div style={{ padding: 20, backgroundColor: '#ffffff', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', maxWidth: '161vh' }}>
                     <Typography variant="h5" gutterBottom>
