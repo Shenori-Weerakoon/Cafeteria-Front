@@ -1,19 +1,31 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Sidebar from '../Main/SideBar';
 import { DataGrid } from '@mui/x-data-grid';
-import axios from 'axios';
 import Button from '@mui/material/Button';
+import axios from 'axios';
 import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
+import { TextField } from '@material-ui/core';
+import {useReactToPrint} from "react-to-print";
+
+
 
 const Customer = () => {
     const [customer, setCustomer] = useState([]);
+    const [customerSearch, setCustomerSearch] = useState('');
+
+    const ComponentsRef = useRef(); 
+    const handlePrint = useReactToPrint({ 
+    content: () => ComponentsRef.current, 
+    DocumentTitle:"Staff Members Salary Report", 
+    onafterprint:()=>alert("Salary Report Successfully Download!") 
+  })
 
     useEffect(() => {
         fetchCustomerDetails();        
@@ -30,6 +42,7 @@ const Customer = () => {
         } catch (error) {
             console.error('Error fetching customer details:', error);
         }
+
     };  
     
     
@@ -49,6 +62,8 @@ const Customer = () => {
             console.error('Error updating employee:', error);
         }
     };
+
+    
 
     const columns = [        
         { field: 'name', headerName: 'Name', width: 250 },
@@ -75,6 +90,14 @@ const Customer = () => {
             ),
         },
     ];  
+
+    const handleCustomerSearch = () => {
+        const filteredCustomer = customer.filter((cus) =>
+            cus.name.toLowerCase().includes(customerSearch.toLowerCase())
+        );
+        setCustomer(filteredCustomer);
+    };
+
     return (
         <div style={{ display: 'flex', height: '100vh', maxWidth: '161vh' }}>
             <Sidebar />
@@ -91,8 +114,38 @@ const Customer = () => {
                     <Typography variant="h5" gutterBottom>
                     Customer Details
                     </Typography>
+
+                    <TextField
+                        label="Search"
+                        variant="outlined"
+                        size="small"
+                        style={{ marginBottom: 10 }}
+                        value={customerSearch}
+                        onChange={(e) => setCustomerSearch(e.target.value)}
+                    />
+                    <Button variant="contained" sx ={{bgcolor:'#B7EBBD', color:'#000000'}} onClick={handleCustomerSearch}>
+                        Search
+                    </Button>
+
+                    <button onClick={handlePrint}
+                             style={{
+                                backgroundColor: '#37a2d7',
+                                color: '#ffffff',
+                                padding: '10px', 
+                                variant : "contained",
+                                border: 'none', 
+                                borderRadius: '5px', 
+                                
+                            }}
+                            >
+                            <i className="fas fa-download" style={{ marginRight: '8px'}}></i> 
+                            Download
+                            </button>
+                    <div ref={ComponentsRef} style={{ width: '100%' }}>
+
                     <div style={{ width: '100%' }}>
                         <DataGrid rows={customer} columns={columns} pageSize={5} />
+                    </div>
                     </div>
                 </div>              
             </div>
