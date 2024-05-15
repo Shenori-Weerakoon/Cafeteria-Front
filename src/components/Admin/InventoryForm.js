@@ -76,11 +76,33 @@ const InventoryForm = () => {
             errors.stock = 'Stock is required';
             isValid = false;
         }
+        
+    // Validate Stock
+    if (newItem.stock <= 0) {
+        errors.stock = 'Stock must be a positive value';
+        isValid = false;
+    }
+        
+    // Validate Expire Date
+    const today = new Date();
+    const expireDate = new Date(newItem.exp);
+    if (!newItem.exp.trim()) {
+        errors.exp = 'Expire Date Count is required';
+        isValid = false
+    } else if (expireDate < today) {
+        errors.exp = 'Expire Date cannot be in the past';
+        isValid = false;
+    }
 
-        if (!newItem.exp.trim()) {
-            errors.exp = 'Expire Date Count is required';
-            isValid = false;
-        }
+     // Validate Manufacture Date
+     const manufactureDate = new Date(newItem.mnf);
+     if (!newItem.mnf.trim()) {
+         errors.mnf = 'Manufacture Date is required';
+         isValid = false;
+     } else if (manufactureDate > today) {
+         errors.mnf = 'Manufacture Date cannot be in the future';
+         isValid = false;
+     }
 
         if (!newItem.mnf.trim()) {
             errors.mnf = 'Manufacture Date is required';
