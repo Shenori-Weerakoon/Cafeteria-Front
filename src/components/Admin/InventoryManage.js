@@ -94,14 +94,14 @@ const InventoryManage = () => {
     return (
         <div style={{ display: 'flex', height: '100vh', maxWidth: '161vh' }}>
             <Sidebar />
-            <div style={{ flexGrow: 1, padding: 20, backgroundColor: '#ecf0f1', display: 'flex', flexDirection: 'column' }}>
-                <AppBar position="static" sx={{ backgroundColor: '#1c2331', boxShadow: 'none' }}>
+            <div style={{ flexGrow: 1, padding: 20, backgroundColor: '#B7EBBD', display: 'flex', flexDirection: 'column' }}>
+                <AppBar position="static" sx={{ backgroundColor: '#EDAF28', boxShadow: 'none' }}>
                     <Toolbar>
                         <Typography variant="h6" component="div">
                         Inventory Management
                         </Typography>
                         <div style={{ flexGrow: 1 }}></div>
-                        <Button variant="contained" color="primary" onClick={handleAddInventory}>
+                        <Button variant="contained" sx={{bgcolor:'#009637', color:'#ffffff'}} color="primary" onClick={handleAddInventory}>
                             Add New Item
                         </Button>
                     </Toolbar>
