@@ -9,7 +9,8 @@ const PromotionForm = () => {
         name: '',
         promo: 0,
         status: 'Deactive',
-        date: ''
+        date: '',
+        con: 0
     });
 
     const info = JSON.parse(localStorage.getItem("selectedPromotion"));
@@ -110,6 +111,11 @@ const PromotionForm = () => {
             isValid = false;
         }
 
+        if (promotion.con === 0) {
+            errors.con = 'Promotion Condition is required';
+            isValid = false;
+        }
+
         setErrors(errors);
         return isValid;
     };
@@ -138,7 +144,7 @@ const PromotionForm = () => {
                             Edit
                         </Button>
                     ) : (
-                        <Button variant="contained"sx={{bgcolor:'#009637',color:'#ffffff'}}   onClick={handleAddItem}>
+                        <Button variant="contained" sx={{bgcolor:'#009637',color:'#ffffff'}} onClick={handleAddItem}>
                             Add
                         </Button>
                     )}
@@ -195,6 +201,20 @@ const PromotionForm = () => {
                                 error={!!errors.date}
                                 helperText={errors.date}
                                 type='date'
+                                focused
+                            />
+                        </Grid>
+
+                        <Grid item xs={12}>
+                            <TextField
+                                label="Condition"
+                                fullWidth
+                                value={promotion.con}
+                                onChange={(e) => setPromotion({ ...promotion, con: e.target.value })}
+                                error={!!errors.con}
+                                helperText={errors.con}
+                                type='number'
+                               
                                 focused
                             />
                         </Grid>

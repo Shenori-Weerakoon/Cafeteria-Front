@@ -36,32 +36,47 @@ const CheckoutPage = () => {
     const [orderId, setOrderId] = useState(checkoutItems.orderID);
     const [fullPrice, setFullPrice] = useState(checkoutItems.totalPrice);
     const [finalPrice, setFinalPrice] = useState(fullPrice);
-    const email = sessionStorage.getItem("cusmail");
-    const [promotions, setPromotionS] = useState([]);
+    const [email, setEmail] = useState('');
+    const [promotions, setPromotions] = useState([]);
+    const [selectedPromotion, setSelectedPromotion] = useState(null);
+   
 
     useEffect(() => {
         fetchPromotionDetails();
+        const userEmail = sessionStorage.getItem("cusmail");
+        setEmail(userEmail);
     }, []);
 
     const fetchPromotionDetails = async () => {
         try {
             const response = await axios.get(global.APIUrl + '/promotion/all');
-            const promotionsWithId = response.data.map((promotion, index) => ({
-                id: index + 1,
-                ...promotion
-            }));
-            setPromotionS(promotionsWithId);
+            setPromotions(response.data);
         } catch (error) {
             console.error('Error fetching promotion details:', error);
         }
     };
 
-    useEffect(() => {
-        setFinalPrice(fullPrice - (fullPrice * (promotion / 100)));
-    }, [promotion, fullPrice]);
+   
 
     const handleChange = (event) => {
-        setPromotion(event.target.value);
+        const selectedPromoId = event.target.value;
+        const selectedPromo = promotions.find(promo => promo._id === selectedPromoId);
+        console.log("promotion details" + selectedPromo.promo)
+        setSelectedPromotion(selectedPromo);
+        setPromotion(selectedPromoId);
+        console.log("promotion "+ promotion)
+        if (selectedPromo) {
+            console.log(selectedPromo);
+            const discountedPrice = fullPrice - (fullPrice * (selectedPromo.promo / 100));
+            if (fullPrice >= selectedPromo.con) {
+                setFinalPrice(discountedPrice);
+                console.log(discountedPrice)
+            } else {
+                setFinalPrice(fullPrice);
+            }
+        } else {
+            setFinalPrice(fullPrice);
+        }
     };
 
     const handlePay = () => {
@@ -100,11 +115,22 @@ const CheckoutPage = () => {
                     Full Price: LKR {fullPrice}
                 </Typography>
 
+                {selectedPromotion && (
+                    <>
+                        <Typography variant="h6" gutterBottom>
+                            Promotion: {selectedPromotion.name}
+                        </Typography>
+                        <Typography variant="h6" gutterBottom>
+                            Promotion Discount: {selectedPromotion.promo}%
+                        </Typography>
+                        <Typography variant="h6" gutterBottom>
+                            Promotion Condition: {selectedPromotion.con}
+                        </Typography>
+                    </>
+                )}
+
                 <Typography variant="h6" gutterBottom>
                     Final Price after Promotion: LKR {finalPrice}
-                </Typography>
-                <Typography variant="h6" gutterBottom style={{ paddingTop: '20px' }}>
-                    Add Your Promotion
                 </Typography>
 
                 <FormControl className={classes.formControl} style={{ marginBottom: '20px' }}>
@@ -118,9 +144,8 @@ const CheckoutPage = () => {
                         {promotions
                             .filter(item => item.status === 'Activate')
                             .map(item => (
-                                <MenuItem key={item.id} value={item.promo}>{item.name}</MenuItem>
+                                <MenuItem key={item._id} value={item._id}>{item.name}</MenuItem>
                             ))}
-
                     </Select>
                 </FormControl>
                 <br />

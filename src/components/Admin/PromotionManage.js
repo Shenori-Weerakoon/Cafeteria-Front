@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef,useEffect } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -12,9 +12,18 @@ import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { TextField } from '@material-ui/core';
+import { useReactToPrint} from 'react-to-print';
 
 const PromotionManage = () => {
     const [promotion, setPromotion] = useState([]);
+    const [promotionSearch, setPromotionSearch] = useState('');
+    const ComponentsRef = useRef(); 
+  const handlePrint = useReactToPrint({ 
+    content: () => ComponentsRef.current, 
+    DocumentTitle:"Promotion Details", 
+    onafterprint:()=>alert("Promotion Report Successfully Download!") 
+  })
 
     useEffect(() => {
         fetchPromotionDetails();
@@ -29,7 +38,7 @@ const PromotionManage = () => {
         try {
             const response = await axios.get(global.APIUrl + '/promotion/all');
             const promotionsWithId = response.data.map((promotion, index) => ({
-                id: index + 1,
+                id: index + 5,
                 ...promotion
             }));
             setPromotion(promotionsWithId);
@@ -83,7 +92,8 @@ const PromotionManage = () => {
                 name: selectedPromotion.name,
                 promo: selectedPromotion.promo,
                 status: updatedStatus,
-                date: selectedPromotion.date
+                date: selectedPromotion.date,
+                con: selectedPromotion.con
             };
             await axios.put(`${global.APIUrl}/promotion/update/${selectedPromotion.promotionId}`, data);            
             window.location.href = "/PromotionManage";
@@ -96,6 +106,7 @@ const PromotionManage = () => {
         { field: 'promotionId', headerName: 'ID', width: 200 },
         { field: 'name', headerName: 'Promotion Name', width: 210 },
         { field: 'promo', headerName: 'Promotion', width: 200 },
+        { field: 'con', headerName: 'Condition', width: 200 },
         {
             field: 'status',
             headerName: 'Status',
@@ -148,6 +159,13 @@ const PromotionManage = () => {
         }
     };
 
+    const handlePromotionSearch = () => {
+        const filteredPromotion = promotion.filter((promo) =>
+            promo.name.toLowerCase().includes(promotionSearch.toLocaleLowerCase())
+    );
+    setPromotion(filteredPromotion);
+    };
+
     return (
         <div style={{ display: 'flex', height: '100vh', maxWidth: '161vh' }}>
             <Sidebar />
@@ -158,7 +176,7 @@ const PromotionManage = () => {
                         Promotion Management
                         </Typography>
                         <div style={{ flexGrow: 1 }}></div>
-                        <Button variant="contained" sx={{bgcolor:'#009637',color:'#ffffff'}}  onClick={handleAddPromotion}>
+                        <Button variant="contained" sx={{bgcolor:'#009637',color:'#ffffff'}} onClick={handleAddPromotion}>
                             Add New Promotion
                         </Button>
                     </Toolbar>
@@ -168,8 +186,33 @@ const PromotionManage = () => {
                     <Typography variant="h5" gutterBottom>
                     Promotion Details
                     </Typography>
+                    <TextField
+                        label="search"
+                        variant="outlined"
+                        size="small"
+                        style={{marginBottom:10}}
+                        value={promotionSearch}
+                        onChange={(e) => setPromotionSearch(e.target.value)} />
+
+                        <Button variant="contained" sx={{bgcolor: '#B7EBBD', color:'#000000'}} onClick={handlePromotionSearch}>Search</Button>
                     <div style={{ width: '100%' }}>
+                    <button onClick={handlePrint}
+                             style={{
+                                backgroundColor: '#37a2d7',
+                                color: '#ffffff',
+                                padding: '10px', 
+                                variant : "contained",
+                                border: 'none', 
+                                borderRadius: '5px', 
+                                
+                            }}>
+                            
+                            <i className="fas fa-download" style={{ marginRight: '8px'}}></i> 
+                            Download
+                            </button>
+                        <div ref={ComponentsRef} style={{ width: '100%' }}>
                         <DataGrid rows={promotion} columns={columns} pageSize={5} />
+                    </div>
                     </div>
                 </div>
             </div>
