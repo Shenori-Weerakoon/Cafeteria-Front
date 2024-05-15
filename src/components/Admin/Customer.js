@@ -5,7 +5,12 @@ import Typography from '@mui/material/Typography';
 import Sidebar from '../Main/SideBar';
 import { DataGrid } from '@mui/x-data-grid';
 import axios from 'axios';
-
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import CheckIcon from '@mui/icons-material/Check';
+import CloseIcon from '@mui/icons-material/Close';
 
 const Customer = () => {
     const [customer, setCustomer] = useState([]);
@@ -25,7 +30,25 @@ const Customer = () => {
         } catch (error) {
             console.error('Error fetching customer details:', error);
         }
-    };           
+    };  
+    
+    
+    const handleUpdateEmployee = async (user) => {
+        try {
+            let updatedStatus;
+            if (user.isLoyal  === 'true') {
+                updatedStatus = 'false';
+            } else {
+                updatedStatus = 'true';
+            }
+
+            const updatedUser = { ...user, isLoyal : updatedStatus };
+            await axios.put(`${global.APIUrl}/user/update`, updatedUser);
+            window.location.href = "/Customer";
+        } catch (error) {
+            console.error('Error updating employee:', error);
+        }
+    };
 
     const columns = [        
         { field: 'name', headerName: 'Name', width: 250 },
@@ -33,6 +56,24 @@ const Customer = () => {
         { field: 'phone', headerName: 'Phone Number', width: 250 },
         { field: 'isLoyal', headerName: 'Loyal Status', width: 250 },
         { field: 'points', headerName: 'Loyal Points', width: 250 },
+        {
+            field: 'actions',
+            headerName: 'Actions',
+            width: 150,
+            renderCell: (params) => (
+                <div>
+                    {params.row.isLoyal === 'true' ? (
+                        <IconButton color="error" onClick={() => handleUpdateEmployee(params.row)}>
+                            <CloseIcon />
+                        </IconButton>
+                    ) : (
+                        <IconButton color="success" onClick={() => handleUpdateEmployee(params.row)}>
+                            <CheckIcon />
+                        </IconButton>
+                    )}                   
+                </div>
+            ),
+        },
     ];  
     return (
         <div style={{ display: 'flex', height: '100vh', maxWidth: '161vh' }}>
