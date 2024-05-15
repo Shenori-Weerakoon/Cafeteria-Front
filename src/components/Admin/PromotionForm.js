@@ -102,16 +102,24 @@ const PromotionForm = () => {
             isValid = false;
         }
 
-        if (promotion.promo === 0) {
-            errors.promo = 'Promotion is required';
+        if (promotion.promo <= 0) {
+            errors.promo = 'Promotion must be greater than o';
             isValid = false;
         }
         if (!promotion.date.trim()) {
             errors.date = 'Promotion Date is required';
             isValid = false;
+        }else {
+            const currentDate = new Date();
+            const selectedDate = new Date(promotion.date);
+            if (selectedDate <= currentDate) { // Check if selected date is in the past
+                errors.date = 'Promotion Date must be in the future';
+                isValid = false;
+            }
         }
+        
 
-        if (promotion.con === 0) {
+        if (promotion.con <= 0) {
             errors.con = 'Promotion Condition is required';
             isValid = false;
         }
