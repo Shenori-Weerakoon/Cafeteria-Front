@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -8,11 +8,20 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { TextField } from '@material-ui/core';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { useReactToPrint } from 'react-to-print';
 
 const InventoryManage = () => {
     const [inventory, setInventory] = useState([]);
+    const [inventorySearch, setInventorySearch] = useState('');
+    const ComponentsRef = useRef();
+    const handlePrint = useReactToPrint({
+        content: () => ComponentsRef.current,
+        documentTitle:"Inventory item report",
+        onAfterPrint:()=>alert("Inventory items report successfully download!")
+    })
 
     useEffect(() => {
         fetchInventoryDetails();
@@ -88,6 +97,13 @@ const InventoryManage = () => {
         },
     ];
 
+    const handleInventorySearch = () => {
+        const filteredInventoryItem = inventory.filter((inv) =>
+            inv.itemName.toLowerCase().includes(inventorySearch.toLowerCase())
+        );
+        setInventory(filteredInventoryItem);
+    };
+
     // Check if stock count is less than 25
     const lowStockItems = inventory.filter(item => item.stock < 25);
 
@@ -123,8 +139,39 @@ const InventoryManage = () => {
                             </ul>
                         </div>
                     )}
+
+                    <TextField
+                        label="Search"
+                        variant="outlined"
+                        size="small"
+                        style={{ marginBottom: 10 }}
+                        value={inventorySearch}
+                        onChange={(e) => setInventorySearch(e.target.value)}
+                    />
+                    <Button variant="contained" sx ={{bgcolor:'#B7EBBD', color:'#000000'}} onClick={handleInventorySearch}>
+                        Search
+                    </Button>
+
+                    <button onClick={handlePrint}
+                             style={{
+                                backgroundColor: '#37a2d7',
+                                color: '#ffffff',
+                                padding: '10px', 
+                                variant : "contained",
+                                border: 'none', 
+                                borderRadius: '5px', 
+                                
+                            }}
+                            >
+                            <i className="fas fa-download" style={{ marginRight: '8px'}}></i> 
+                            Download
+                            </button>
+
+                        <div ref={ComponentsRef} style={{ width: '100%' }}>     
+
                     <div style={{ width: '100%' }}>
                         <DataGrid rows={inventory} columns={columns} pageSize={5} />
+                    </div>
                     </div>
                 </div>
             </div>
