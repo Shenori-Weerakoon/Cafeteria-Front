@@ -204,10 +204,11 @@ return(
                     
                     <div ref={ComponentsRef} style={{ width: '100%' }}>
 
-                    </div>
+                    
                     <div style={{ width: '100%' }}>
                         <DataGrid rows={menu} columns={columns} pageSize={5} />
-                    </div>      
+                    </div>  
+                    </div>    
                 </div>
                 
             </div>    
