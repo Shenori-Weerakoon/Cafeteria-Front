@@ -19,6 +19,7 @@ import { TextField, Button } from '@mui/material';
 const OrderPaymentManage = () => {
     const [paidorder, setPaidOrder] = useState([]);
     const [codorder, setCodOrder] = useState([]);
+    const [paymentSearch, setPaymentSearch] = useState('');
 
     useEffect(() => {
         fetchPaidOrderDetails();
@@ -295,6 +296,8 @@ const OrderPaymentManage = () => {
         );
         setPaidOrder(filteredPaymentItem);
     }
+    
+
 
 
 
