@@ -254,7 +254,7 @@ const EmployeeManage = () => {
                         style={{ marginBottom: 10 }}
                         value={salarySearch}
                         onChange={(e) => setSalarySearch(e.target.value)}
-                    />
+                    />0
                     <Button variant="contained" sx ={{bgcolor:'#B7EBBD', color:'#000000'}} onClick={handleSalarySearch}>
                         Search
                     </Button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
