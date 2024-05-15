@@ -128,8 +128,8 @@ const InventoryForm = () => {
     }
 
     return (
-        <div style={{ height: '100vh', paddingTop: '64px', backgroundColor: '#f4f4f4' }}>
-            <AppBar position="fixed" style={{ backgroundColor: '#1c2331', boxShadow: 'none' }}>
+        <div style={{ height: '100vh', paddingTop: '64px', backgroundColor: '#B7EBBD' }}>
+            <AppBar position="fixed" style={{ backgroundColor: '#EDAF28', boxShadow: 'none' }}>
                 <Toolbar>
                     {(info.editBtn) ? (
                         <Typography variant="h6" style={{ flexGrow: 1, fontWeight: 'bold' }}>
@@ -142,11 +142,11 @@ const InventoryForm = () => {
                     )}
                     <div style={{ flexGrow: 1 }}></div>
                     {(info.editBtn) ? (
-                        <Button variant="contained" color="primary" onClick={handleEditItem}>
+                        <Button variant="contained" sx={{bgcolor:'#009637', color:'#ffffff'}} color="primary" onClick={handleEditItem}>
                             Edit Item
                         </Button>
                     ) : (
-                        <Button variant="contained" color="primary" onClick={handleAddItem}>
+                        <Button variant="contained" sx={{bgcolor:'#009637', color:'#ffffff'}} color="primary" onClick={handleAddItem}>
                             Add Item
                         </Button>
                     )}
