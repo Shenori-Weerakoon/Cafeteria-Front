@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -13,9 +13,17 @@ import EditIcon from '@mui/icons-material/Edit';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { Avatar } from '@mui/material';
+import{useReactToPrint} from "react-to-print"
 
 const MenuManage = () => {
     const [menu, setMenu] = useState([]); //initializing status to menu-array
+    const ComponentsRef = useRef(); 
+
+    const handlePrint = useReactToPrint({ 
+        content: () => ComponentsRef.current, 
+        DocumentTitle:"Menu Items Report", 
+        onafterprint:()=>alert("Menu Items Report Successfully Download!") 
+      })
 
     useEffect(() => { //useEffect for fetch data, similar to componentDidMount
         fetchMenuDetails();
@@ -86,6 +94,8 @@ const handleEdit = (selectedMenu) => {
     localStorage.setItem('selectedMenu', JSON.stringify(data));
     window.location.href = "/MenuForm";
 };
+
+
 
 
 const columns = [
@@ -176,9 +186,28 @@ return(
                     <Typography variant="h5" gutterBottom>
                         Item Details
                     </Typography>
+
+                    <button onClick={handlePrint}
+                             style={{
+                                backgroundColor: '#37a2d7',
+                                color: '#ffffff',
+                                padding: '10px', 
+                                variant : "contained",
+                                border: 'none', 
+                                borderRadius: '5px', 
+                                
+                            }}
+                            >
+                            <i className="fas fa-download" style={{ marginRight: '8px'}}></i> 
+                            Print Details
+                            </button>
+                    
+                    <div ref={ComponentsRef} style={{ width: '100%' }}>
+
+                    </div>
                     <div style={{ width: '100%' }}>
                         <DataGrid rows={menu} columns={columns} pageSize={5} />
-                    </div>
+                    </div>      
                 </div>
                 
             </div>    
