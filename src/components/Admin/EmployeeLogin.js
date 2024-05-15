@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
   },
+
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',
@@ -90,7 +91,7 @@ const EmployeeLogin = () => {
   };
 
   return (
-    <div className={classes.root}>
+  <div className={classes.root}>
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <br />

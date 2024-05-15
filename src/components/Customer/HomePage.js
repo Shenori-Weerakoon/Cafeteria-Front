@@ -138,17 +138,134 @@ const HomePage = () => {
         </Grid>
         <hr />
         <Grid container justifyContent="center" spacing={4}>
-         
-            
-              
-                
+          <Grid item>
+            <Card className={classes.card}>
+              <CardActionArea>
+                <CardMedia
+                  className={classes.media}
+                  image="https://source.unsplash.com/featured/?pasta"
+                  title="Pasta"
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="h2">
+                    Pasta
+                  </Typography>
+                  <Typography variant="body2" color="textSecondary" component="p">
+                    Indulge in our freshly baked pastries and desserts.
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          </Grid>
+          <Grid item>
+            <Card className={classes.card}>
+              <CardActionArea>
+                <CardMedia
+                  className={classes.media}
+                  image="https://source.unsplash.com/featured/?tea"
+                  title="Tea"
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="h2">
+                    Tea
+                  </Typography>
+                  <Typography variant="body2" color="textSecondary" component="p">
+                    Discover our collection of exotic teas from around the world.
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          </Grid>
+          <Grid item>
+            <Card className={classes.card}>
+              <CardActionArea>
+                <CardMedia
+                  className={classes.media}
+                  image="https://source.unsplash.com/featured/?pastry"
+                  title="Pastry"
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="h2">
+                    Pastries
+                  </Typography>
+                  <Typography variant="body2" color="textSecondary" component="p">
+                    Indulge in our freshly baked pastries and desserts.
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          </Grid>
         </Grid>
         <hr />
-        
+        <Typography variant="body1" style={{ paddingTop: '20px', paddingBottom: '20px', backgroundColor: '#eeeeee' }} align="center">
+          <Typography variant="h4" component="h3" gutterBottom style={{ fontWeight: 'bold' }}>
+            Caravan Fresh <span style={{ color: 'orange' }}>Life</span>
+            <hr style={{ width: '500px', }}></hr>
+          </Typography>
+          <Typography variant="body1" style={{ fontSize: '1.2rem', fontWeight: 'lighter' }}>
+            From classic cakes to avant-garde creations, our master bakers use only the finest ingredients to create culinary masterpieces that are as beautiful as they are delicious. Indulge in the rich, velvety texture of our signature cakes or savor the delicate layers of our artisanal pastries – each bite is a celebration of taste and tradition.
+            Whether you're celebrating a special occasion or simply treating yourself to a little slice of heaven, Caravan Fresh is your destination for all things sweet and savory. Join us on a culinary adventure where every moment is a feast for the senses.
+          </Typography>
+        </Typography>
+        <hr />
         <Grid container justifyContent="center" spacing={4}>
-          
-          
-        
+          <Grid item>
+            <Card className={classes.card}>
+              <CardActionArea>
+                <CardMedia
+                  className={classes.media}
+                  image="https://source.unsplash.com/featured/?pizza"
+                  title="Pizza"
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="h2">
+                    Pizza
+                  </Typography>
+                  <Typography variant="body2" color="textSecondary" component="p">
+                    Enjoy our wide selection of freshly brewed coffees.
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          </Grid>
+          <Grid item>
+            <Card className={classes.card}>
+              <CardActionArea>
+                <CardMedia
+                  className={classes.media}
+                  image="https://source.unsplash.com/featured/?icecream"
+                  title="Icecream"
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="h2">
+                    Ice Cream
+                  </Typography>
+                  <Typography variant="body2" color="textSecondary" component="p">
+                    Discover our collection of exotic teas from around the world.
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          </Grid>
+          <Grid item>
+            <Card className={classes.card}>
+              <CardActionArea>
+                <CardMedia
+                  className={classes.media}
+                  image="https://source.unsplash.com/featured/?coffee"
+                  title="Coffee"
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="h2">
+                    Coffee
+                  </Typography>
+                  <Typography variant="body2" color="textSecondary" component="p">
+                    Enjoy our wide selection of freshly brewed coffees.
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          </Grid>
         </Grid>
       </div>
       <Footer />

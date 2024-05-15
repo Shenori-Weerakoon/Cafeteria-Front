@@ -70,6 +70,17 @@ export default function SignUpSide() {
             return;
         }
 
+        if (phone.length !== 10) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Phone number must be 10 digits long',
+            });
+            return;
+        }
+        
+
+
         try {
             const user = { email, password, name, phone, isLoyal, points };
             const response = await axios.post(

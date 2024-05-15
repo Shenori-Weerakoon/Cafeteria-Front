@@ -8,10 +8,12 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
+import { TextField } from '@mui/material';
 import axios from 'axios';
 
 const SupportTicket = () => {
     const [ticket, setTicket] = useState([]);
+    const [supportSearch, setSupportSearch] = useState('');
 
     useEffect(() => {
         fetchTicketDetails();
@@ -112,6 +114,13 @@ const SupportTicket = () => {
         },
     ];
 
+    const handleSupportSearch = () => {
+        const filteredSupportTicket = ticket.filter((supportTck) => 
+        supportTck.name.toLowerCase().includes(supportSearch.toLowerCase())
+        );
+        setSupportSearch(filteredSupportTicket)
+    }
+
     return (
         <div style={{ display: 'flex', height: '100vh', maxWidth: '161vh' }}>
             <Sidebar />
@@ -128,6 +137,19 @@ const SupportTicket = () => {
                     <Typography variant="h5" gutterBottom>
                         Support Ticket Details
                     </Typography>
+
+                    <TextField
+                    label = "Search"
+                    variant="outlined"
+                    size="small"
+                    style={{marginBottom: 10}}
+                    value={supportSearch}
+                    onChange={(e) => setSupportSearch(e.target.value)} />
+
+                <Button variant="contained" sx ={{bgcolor:'#B7EBBD', color:'#000000'}} onClick={handleSupportSearch}>
+                    Search
+                </Button>
+
                     <div style={{ width: '100%' }}>
                         <DataGrid rows={ticket} columns={columns} pageSize={5} />
                     </div>
