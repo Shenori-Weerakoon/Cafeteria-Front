@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef} from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -10,10 +10,19 @@ import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import { TextField } from '@mui/material';
 import axios from 'axios';
+import { useReactToPrint } from 'react-to-print';
 
 const SupportTicket = () => {
     const [ticket, setTicket] = useState([]);
     const [supportSearch, setSupportSearch] = useState('');
+    const ComponentsRef = useRef(); 
+
+
+const handlePrint = useReactToPrint({ 
+    content: () => ComponentsRef.current, 
+    DocumentTitle:"support ticket Report", 
+    onafterprint:()=>alert("support ticket Report Successfully Download!") 
+  })
 
     useEffect(() => {
         fetchTicketDetails();
@@ -149,9 +158,26 @@ const SupportTicket = () => {
                 <Button variant="contained" sx ={{bgcolor:'#B7EBBD', color:'#000000'}} onClick={handleSupportSearch}>
                     Search
                 </Button>
+                <button onClick={handlePrint}
+                             style={{
+                                backgroundColor: '#37a2d7',
+                                color: '#ffffff',
+                                padding: '10px', 
+                                variant : "contained",
+                                border: 'none', 
+                                borderRadius: '5px', 
+                                
+                            }}
+                            >
+                            <i className="fas fa-download" style={{ marginRight: '8px'}}></i> 
+                            Download
+                            </button>
+                    <div ref={ComponentsRef} style={{ width: '100%' }}>
 
                     <div style={{ width: '100%' }}>
                         <DataGrid rows={ticket} columns={columns} pageSize={5} />
+
+                    </div>
                     </div>
                 </div>
             </div>
