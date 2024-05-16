@@ -21,6 +21,7 @@ const OrderPaymentManage = () => {
     const [paidorder, setPaidOrder] = useState([]);
     const [codorder, setCodOrder] = useState([]);
     const [paymentSearch, setPaymentSearch] = useState('');
+    const [codSearch, setCodSearch] = useState('');
     const ComponentsRef = useRef(); 
     const handlePrint = useReactToPrint({ 
     content: () => ComponentsRef.current, 
@@ -303,6 +304,13 @@ const OrderPaymentManage = () => {
         );
         setPaidOrder(filteredPaymentItem);
     }
+
+    const handleCodSearch = () => {
+        const filteredCod = codorder.filter((ord) => 
+            ord.city.toLowerCase().includes(codSearch.toLowerCase())
+        );
+        setCodSearch(filteredCod);
+    }
     
 
 
@@ -352,16 +360,29 @@ const OrderPaymentManage = () => {
 
                             <div ref={ComponentsRef} style={{ width: '100%' }}>
 
-                    <div style={{ width: '100%' }}>
-                        <DataGrid rows={paidorder} columns={columns} pageSize={5} />
-                    </div>
+                                <div style={{ width: '100%' }}>
+                                    <DataGrid rows={paidorder} columns={columns} pageSize={5} />
+                                </div>
                     
+                            </div>
                 </div>
-                </div>
+
                 <div style={{ padding: 20, backgroundColor: '#ffffff', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', maxWidth: '161vh' }}>
                     <Typography variant="h5" gutterBottom>
                         Cash On Delivery Orders
                     </Typography>
+
+                    <TextField
+                    label = "Search"
+                    variant="outlined"
+                    size="small"
+                    style={{marginBottom: 10}}
+                    value={codSearch}
+                    onChange={(e) => setCodSearch(e.target.value)}></TextField>
+
+                <Button variant="contained" sx ={{bgcolor:'#B7EBBD', color:'#000000'}} onClick={handleCodSearch}>
+                    Search
+                </Button>
 
                     
                     <div style={{ width: '100%' }}>
