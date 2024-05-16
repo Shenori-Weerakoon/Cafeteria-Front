@@ -14,6 +14,8 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import TextField from '@mui/material/TextField';
 import {useReactToPrint} from "react-to-print";
+import { jsPDF } from "jspdf";
+import "jspdf-autotable";
 
 const EmployeeManage = () => {
     const [employee, setEmployee] = useState([]);
@@ -21,11 +23,33 @@ const EmployeeManage = () => {
     const [employeeSearch, setEmployeeSearch] = useState('');
     const [salarySearch, setSalarySearch] = useState('');
     const ComponentsRef = useRef(); 
-  const handlePrint = useReactToPrint({ 
-    content: () => ComponentsRef.current, 
-    DocumentTitle:"Staff Members Salary Report", 
-    onafterprint:()=>alert("Salary Report Successfully Download!") 
-  })
+
+    const generatePdf = () => {
+        const doc = new jsPDF();
+        const date = new Date().toLocaleDateString();
+        const title ='Employee Salary Report';
+        const signature = "Signature: ___________________";
+
+
+       
+
+        // Add title and date
+        doc.setFontSize(16);
+        doc.text(title, 14, 20);
+        doc.setFontSize(12);
+        doc.text(`Date: ${date}`, 14, 30);
+        doc.text(signature, 14, 40);
+
+        // Add table
+        doc.autoTable({
+            head: [['Employee ID', 'Employee Name', 'Per Day Salary(Rs.)', 'Working Days', 'Full Salary(Rs.)']],
+            body:salary.map((s) => [s.uid, s.name, s.salary, s.days, s.fullSalary]),
+            startY: 50,
+        });
+
+        // Save the PDF
+        doc.save('salary_report.pdf');
+    };
     
     useEffect(() => {
         fetchEmployeeDetails();
@@ -259,7 +283,7 @@ const EmployeeManage = () => {
                         Search
                     </Button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     
-                    <button onClick={handlePrint}
+                    <button onClick={generatePdf}
                              style={{
                                 backgroundColor: '#37a2d7',
                                 color: '#ffffff',
@@ -271,7 +295,7 @@ const EmployeeManage = () => {
                             }}
                             >
                             <i className="fas fa-download" style={{ marginRight: '8px'}}></i> 
-                            Download
+                            Download Report
                             </button>
                     <div ref={ComponentsRef} style={{ width: '100%' }}>
                         <DataGrid rows={salary} columns={column} pageSize={5} />
