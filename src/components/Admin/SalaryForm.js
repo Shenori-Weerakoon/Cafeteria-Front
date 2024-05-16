@@ -69,7 +69,7 @@ const SalaryForm = () => {
     const handleDateChange = (value) => {
         setNewSalary({ ...newSalary, date: value });
         if (!validateDate(value)) {
-            setDateError("Please select a recent date.");
+            setDateError("Please select a current date.");
         } else {
             setDateError("");
         }

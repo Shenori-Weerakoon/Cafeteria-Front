@@ -22,6 +22,7 @@ const AddNewEmployeeForm = () => {
   const [phoneError, setPhoneError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [emailError, setEmailError] = useState('');
+  const [nicError, setNicError] = useState('');
 
   useEffect(() => {
     if (info.editBtn) {
@@ -47,6 +48,11 @@ const AddNewEmployeeForm = () => {
       setNewEmployee({ ...newEmployee, salary: '' });
       setErrors((prev) => ({ ...prev, salary: 'Salary must be a non-negative number' }));
     }
+  };
+
+  const validateNIC = (nic) => {
+    const regex = /^(?:\d{12}|\d{11}[Vv])$/;
+    return regex.test(nic);
   };
 
   const handleNameChange = (value) => {
@@ -90,6 +96,7 @@ const AddNewEmployeeForm = () => {
       setPasswordError('');
     }
   };
+
 
   const handleAddEmployee = async () => {
     if (validateForm()) {
@@ -139,6 +146,12 @@ const AddNewEmployeeForm = () => {
       newErrors.name = 'Name should contain only letters';
       isValid = false;
     }
+
+    
+    if (!newEmployee.nic.trim() || !validateNIC(newEmployee.nic)) {
+       newErrors.nic = 'NIC must be 12 digits or 11 digits followed by V or v';
+      isValid = false;
+      }
 
     if (!newEmployee.nic.trim()) {
       newErrors.nic = 'NIC is required';
@@ -272,9 +285,16 @@ const AddNewEmployeeForm = () => {
                 label="NIC"
                 fullWidth
                 value={newEmployee.nic}
-                onChange={(e) => setNewEmployee({ ...newEmployee, nic: e.target.value })}
-                error={!!errors.nic}
-                helperText={errors.nic}
+                onChange={(e) => {
+                  setNewEmployee({ ...newEmployee, nic: e.target.value });
+                  if (!validateNIC(e.target.value)) {
+                    setNicError('NIC must be 12 digits or 11 digits followed by V or v');
+                  } else {
+                    setNicError('');
+                  }
+                }}
+                error={!!nicError}
+                helperText={nicError}
               />
             </Grid>
 
