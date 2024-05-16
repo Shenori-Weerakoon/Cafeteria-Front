@@ -19,6 +19,7 @@ import Swal from 'sweetalert2';
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
+        backgroundImage:`url(${'https://i.pinimg.com/originals/ee/29/70/ee29703780f7172631b1bab06e70c66f.jpg'})`,
     },
     header: {
         textAlign: 'center',
