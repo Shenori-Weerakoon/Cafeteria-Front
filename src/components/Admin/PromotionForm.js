@@ -7,10 +7,10 @@ const PromotionForm = () => {
     const [promotion, setPromotion] = useState({
         promotionId: "P" + generateId(),
         name: '',
-        promo: 0,
+        promo:'' ,
         status: 'Deactive',
         date: '',
-        con: 0
+        con: ''
     });
 
     const info = JSON.parse(localStorage.getItem("selectedPromotion"));
@@ -120,7 +120,7 @@ const PromotionForm = () => {
         
 
         if (promotion.con <= 0) {
-            errors.con = 'Promotion Condition is required';
+            errors.con = 'Promotion must be greater than o';
             isValid = false;
         }
 
@@ -189,7 +189,7 @@ const PromotionForm = () => {
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
-                                label="Promotion"
+                                label="Discount Price (%)"
                                 fullWidth
                                 value={promotion.promo}
                                 onChange={(e) => setPromotion({ ...promotion, promo: e.target.value })}
@@ -215,7 +215,7 @@ const PromotionForm = () => {
 
                         <Grid item xs={12}>
                             <TextField
-                                label="Condition"
+                                label="Required Minimum Amount"
                                 fullWidth
                                 value={promotion.con}
                                 onChange={(e) => setPromotion({ ...promotion, con: e.target.value })}

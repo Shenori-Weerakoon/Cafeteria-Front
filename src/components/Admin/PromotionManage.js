@@ -106,7 +106,7 @@ const PromotionManage = () => {
         { field: 'promotionId', headerName: 'ID', width: 200 },
         { field: 'name', headerName: 'Promotion Name', width: 210 },
         { field: 'promo', headerName: 'Promotion', width: 200 },
-        { field: 'con', headerName: 'Condition', width: 200 },
+        { field: 'con', headerName: 'Req Minimum Amount', width: 200 },
         {
             field: 'status',
             headerName: 'Status',

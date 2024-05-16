@@ -9,6 +9,7 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundImage:`url(${'https://image.freepik.com/free-photo/abstract-blur-interior-coffee-shop-cafe-background_42682-256.jpg'})`,
         height: '100vh',
         backgroundColor: '#f5f5f5',
     },
@@ -39,7 +40,7 @@ const CheckoutPage = () => {
     const [email, setEmail] = useState('');
     const [promotions, setPromotions] = useState([]);
     const [selectedPromotion, setSelectedPromotion] = useState(null);
-   
+    const [promotionErrorMessage, setPromotionErrorMessage] = useState('');
 
     useEffect(() => {
         fetchPromotionDetails();
@@ -56,8 +57,6 @@ const CheckoutPage = () => {
         }
     };
 
-   
-
     const handleChange = (event) => {
         const selectedPromoId = event.target.value;
         const selectedPromo = promotions.find(promo => promo._id === selectedPromoId);
@@ -67,12 +66,14 @@ const CheckoutPage = () => {
         console.log("promotion "+ promotion)
         if (selectedPromo) {
             console.log(selectedPromo);
-            const discountedPrice = fullPrice - (fullPrice * (selectedPromo.promo / 100));
             if (fullPrice >= selectedPromo.con) {
+                const discountedPrice = fullPrice - (fullPrice * (selectedPromo.promo / 100));
                 setFinalPrice(discountedPrice);
-                console.log(discountedPrice)
+                console.log(discountedPrice);
+                setPromotionErrorMessage('Promotion Applied!!');
             } else {
                 setFinalPrice(fullPrice);
+                setPromotionErrorMessage('Your full price is less than the promotion condition.');
             }
         } else {
             setFinalPrice(fullPrice);
@@ -99,7 +100,7 @@ const CheckoutPage = () => {
 
     return (
         <div className={classes.root}>
-            <Paper className={classes.paper}>
+            <Paper className={classes.paper} style={{backgroundColor: '#f5deb3'}}>
                 <Typography variant="h4" gutterBottom style={{ color: 'black' }}>
                     Checkout
                 </Typography>
@@ -123,17 +124,28 @@ const CheckoutPage = () => {
                         <Typography variant="h6" gutterBottom>
                             Promotion Discount: {selectedPromotion.promo}%
                         </Typography>
+                        <Typography variant="h6" gutterBottom style={{ color: '#FF0000' }}>
+                            Your Total Amount Must Fulfill Below Condition.
+                        </Typography>
+                            
+
                         <Typography variant="h6" gutterBottom>
-                            Promotion Condition: {selectedPromotion.con}
+                            Promotion Condition: LKR {selectedPromotion.con}
                         </Typography>
                     </>
+                )}
+
+                {promotionErrorMessage && (
+                    <Typography variant="body1" gutterBottom style={{ color: 'orange' }}>
+                        {promotionErrorMessage}
+                    </Typography>
                 )}
 
                 <Typography variant="h6" gutterBottom>
                     Final Price after Promotion: LKR {finalPrice}
                 </Typography>
 
-                <FormControl className={classes.formControl} style={{ marginBottom: '20px' }}>
+                <FormControl className={classes.formControl} style={{ marginBottom: '20px',backgroundColor: '#ffffff'}}>
                     <InputLabel id="demo-simple-select-label">Promotion</InputLabel>
                     <Select
                         labelId="demo-simple-select-label"
