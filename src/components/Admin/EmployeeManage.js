@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useRef } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -12,17 +12,50 @@ import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-
+import TextField from '@mui/material/TextField';
+import {useReactToPrint} from "react-to-print";
+import { jsPDF } from "jspdf";
+import "jspdf-autotable";
 
 const EmployeeManage = () => {
     const [employee, setEmployee] = useState([]);
     const [salary, setSalary] = useState([]);
+    const [employeeSearch, setEmployeeSearch] = useState('');
+    const [salarySearch, setSalarySearch] = useState('');
+    const ComponentsRef = useRef(); 
 
+    const generatePdf = () => {
+        const doc = new jsPDF();
+        const date = new Date().toLocaleDateString();
+        const title ='Employee Salary Report';
+        const signature = "Signature: ___________________";
+
+
+       
+
+        // Add title and date
+        doc.setFontSize(16);
+        doc.text(title, 14, 20);
+        doc.setFontSize(12);
+        doc.text(`Date: ${date}`, 14, 30);
+        doc.text(signature, 14, 40);
+
+        // Add table
+        doc.autoTable({
+            head: [['Employee ID', 'Employee Name', 'Per Day Salary(Rs.)', 'Working Days', 'Full Salary(Rs.)']],
+            body:salary.map((s) => [s.uid, s.name, s.salary, s.days, s.fullSalary]),
+            startY: 50,
+        });
+
+        // Save the PDF
+        doc.save('salary_report.pdf');
+    };
+    
     useEffect(() => {
         fetchEmployeeDetails();
         fetchSalaryDetails();
-        const editBtn = false;     
-        const data = {            
+        const editBtn = false;
+        const data = {
             editBtn
         };
         localStorage.setItem('selectedEmployee', JSON.stringify(data));
@@ -39,8 +72,9 @@ const EmployeeManage = () => {
         } catch (error) {
             console.error('Error fetching employee details:', error);
         }
-    };  
-      const fetchSalaryDetails = async () => {
+    };
+
+    const fetchSalaryDetails = async () => {
         try {
             const response = await axios.get(global.APIUrl + '/salary/all');
             const salaryWithId = response.data.map((salary, index) => ({
@@ -58,7 +92,7 @@ const EmployeeManage = () => {
     };
 
     const handleEditEmployee = (selectedEmployee) => {
-        const editBtn = true;     
+        const editBtn = true;
         const data = {
             selectedEmployee,
             editBtn
@@ -89,10 +123,10 @@ const EmployeeManage = () => {
         }
     };
 
-
-
     const handleDeleteEmployee = (employeeId) => {
+        const confirmDelete = window.confirm("Are you sure?");
         axios.delete(global.APIUrl + "/admin/delete/" + employeeId).then(() => {
+            alert("Employee Deleted!!");
             window.location.href = "/Employee";
 
         }).catch((err) => {
@@ -164,19 +198,34 @@ const EmployeeManage = () => {
                 </div>
             ),
         },
-    ];  
-      const column = [
+    ];
+
+    const column = [
         { field: 'uid', headerName: 'Employee ID', width: 200 },
         { field: 'name', headerName: 'Employee Name', width: 200 },
         { field: 'date', headerName: 'Date', width: 200 },
-        { field: 'salary', headerName: 'Per Day Salary', width: 200 },
+        { field: 'salary', headerName: 'Per Day Salary(Rs.)', width: 200 },
         { field: 'days', headerName: 'Working Days', width: 200 },
-        { field: 'fullSalary', headerName: 'Full Salary', width: 200 },             
+        { field: 'fullSalary', headerName: 'Full Salary(Rs.)', width: 200 },
     ];
 
     const handleAddSalary = () => {
         window.location.href = "/SalaryForm";
-    }
+    };
+
+    const handleEmployeeSearch = () => {
+        const filteredEmployee = employee.filter((emp) =>
+            emp.name.toLowerCase().includes(employeeSearch.toLowerCase())
+        );
+        setEmployee(filteredEmployee);
+    };
+
+    const handleSalarySearch = () => {
+        const filteredSalary = salary.filter((sal) =>
+            sal.name.toLowerCase().includes(salarySearch.toLowerCase())
+        );
+        setSalary(filteredSalary);
+    };
 
     return (
         <div style={{ display: 'flex', height: '200vh', maxWidth: '1000vh' }}>
@@ -188,33 +237,71 @@ const EmployeeManage = () => {
                             Employee Management
                         </Typography>
                         <div style={{ flexGrow: 1 }}></div>
-                        <Button variant="contained" sx ={{bgcolor:'#009637', color:'#ffffff'}} onClick={handleAddEmployee}>
+                        <Button variant="contained"  sx ={{bgcolor:'#009637', color:'#ffffff'}} onClick={handleAddEmployee}>
                             Add New Employee
                         </Button>
                         &nbsp;
                         &nbsp;
-                         <Button variant="contained" sx ={{bgcolor:'#009637', color:'#ffffff'}} onClick={handleAddSalary}>
+                        <Button variant="contained" sx ={{bgcolor:'#009637', color:'#ffffff'}} onClick={handleAddSalary}>
                             Salary
                         </Button>
                     </Toolbar>
                 </AppBar>
 
                 <div style={{ padding: 20, backgroundColor: '#ffffff', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', maxWidth: '180vh' }}>
-                    <Typography variant="h5" gutterBottom textAlign = "center"><b>
+                    <Typography variant="h5" gutterBottom><b>
                         Employee Details</b>
                     </Typography>
+                    <TextField
+                        label="Search"
+                        variant="outlined"
+                        size="small"
+                        style={{ marginBottom: 10 }}
+                        value={employeeSearch}
+                        onChange={(e) => setEmployeeSearch(e.target.value)}
+                    />
+                    <Button variant="contained" sx ={{bgcolor:'#B7EBBD', color:'#000000'}} onClick={handleEmployeeSearch}>
+                        Search
+                    </Button>
                     <div style={{ width: '100%' }}>
                         <DataGrid rows={employee} columns={columns} pageSize={5} />
                     </div>
                 </div>
-                <div style={{ padding: 20, backgroundColor: '#ffffff', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', maxWidth: '180vh' }}>
-                    <Typography variant="h5" gutterBottom textAlign = "center"><b>
+                <div style={{ padding: 20, backgroundColor: '#ffffff', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', maxWidth: '180vh' }} >
+                    <Typography variant="h5" gutterBottom><b>
                         Salary Details</b>
                     </Typography>
-                    <div style={{ width: '100%' }}>
+                    <TextField
+                        label="Search"
+                        variant="outlined"
+                        size="small"
+                        style={{ marginBottom: 10 }}
+                        value={salarySearch}
+                        onChange={(e) => setSalarySearch(e.target.value)}
+                    />0
+                    <Button variant="contained" sx ={{bgcolor:'#B7EBBD', color:'#000000'}} onClick={handleSalarySearch}>
+                        Search
+                    </Button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    
+                    <button onClick={generatePdf}
+                             style={{
+                                backgroundColor: '#37a2d7',
+                                color: '#ffffff',
+                                padding: '10px', 
+                                variant : "contained",
+                                border: 'none', 
+                                borderRadius: '5px', 
+                                
+                            }}
+                            >
+                            <i className="fas fa-download" style={{ marginRight: '8px'}}></i> 
+                            Download Report
+                            </button>
+                    <div ref={ComponentsRef} style={{ width: '100%' }}>
                         <DataGrid rows={salary} columns={column} pageSize={5} />
                     </div>
                 </div>
+                
             </div>
         </div>
     );

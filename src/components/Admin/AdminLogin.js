@@ -92,8 +92,7 @@ const AdminLogin = () => {
 
   return (
     <div className={classes.root}>
-    <div style={{backgroundColor:'#f5f8c9'}}>
-    <Container component="main" maxWidth="xs" >
+    <Container component="main" maxWidth="xs">
       <CssBaseline />
       <br />
       <div className={classes.paper}>
@@ -101,8 +100,8 @@ const AdminLogin = () => {
           <LockOutlinedIcon style={{ fontSize: 40 }} />
         </Avatar>
         <br />
-        <Typography component="h1" variant="h5"><b>
-          Admin Login</b>
+        <Typography component="h1" variant="h5">
+          Admin Login
         </Typography>
         <br />
         <Card className={classes.card}>
@@ -164,7 +163,6 @@ const AdminLogin = () => {
       </div>
       <br />
     </Container>
-    </div>
     </div>
   );
 }

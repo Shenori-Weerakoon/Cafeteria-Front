@@ -8,12 +8,72 @@ const SalaryForm = () => {
         uid: '',
         name: '',
         date: '',
-        days: 0,
-        salary: 0,
+        days: '',
+        salary: '',
         fullSalary: 0
     });
 
     const [errors, setErrors] = useState({});
+    const [nameError, setNameError] = useState("");
+    const [dateError, setDateError] = useState("");
+    
+
+    // Validation function to check if the input contains only letters
+    const validateName = (value) => {
+        const regex = /^[a-zA-Z\s]*$/;
+        return regex.test(value);
+    };
+
+    const handleNameChange = (value) => {
+        setNewSalary({ ...newSalary, name: value });
+        if (!validateName(value)) {
+            setNameError("Name should contain only letters.");
+        } else {
+            setNameError("");
+        }
+    };
+
+    const handleSalaryChange = (e) => {
+        const value = parseFloat(e.target.value);
+        // Allow only non-negative numbers
+        if (!isNaN(value) && value >= 0) {
+            setNewSalary({ ...newSalary, salary: value });
+            setErrors({ ...errors, salary: '' });
+        } else {
+            // If the value is negative, reset the field to empty and show an error message
+            setNewSalary({ ...newSalary, salary: '' });
+            setErrors({ ...errors, salary: 'Salary must be a non-negative number' });
+        }
+    };
+
+    const handleWorkingdaysChange = (e) => {
+        const value = parseInt(e.target.value);
+        // Allow only non-negative numbers
+        if (!isNaN(value) && value >= 0) {
+            setNewSalary({ ...newSalary, days: value });
+            setErrors({ ...errors, days: '' });
+        } else {
+            // If the value is negative, reset the field to empty and show an error message
+            setNewSalary({ ...newSalary, days: '' });
+            setErrors({ ...errors, days: 'Working must be a non-negative number' });
+        }
+    };
+
+    const validateDate = (value) => {
+        const selectedDate = new Date(value);
+        const currentDate = new Date();
+        // Check if the selected date is the current day
+        return selectedDate.toDateString() === currentDate.toDateString();
+    };
+
+    const handleDateChange = (value) => {
+        setNewSalary({ ...newSalary, date: value });
+        if (!validateDate(value)) {
+            setDateError("Please select a current date.");
+        } else {
+            setDateError("");
+        }
+    };
 
     const handleAddSalary = async () => {
         if (validateForm()) {
@@ -48,25 +108,43 @@ const SalaryForm = () => {
             isValid = false;
         }
 
+        // Validate name
         if (!newSalary.name) {
             errors.name = 'Name is required';
             isValid = false;
+        } else if (!validateName(newSalary.name)) {
+            errors.name = 'Name should contain only letters';
+            isValid = false;
         }
 
+        // Salary validation
         if (!newSalary.salary) {
             errors.salary = 'Salary is required';
             isValid = false;
-        }
+        } 
 
+        
+
+        // Working Days validation
+        if (!newSalary.days || newSalary.days < 0) {
+            errors.days = 'Per Day Salary must be a non-negative number';
+            isValid = false;
+        } 
+
+        // Working Days validation
         if (!newSalary.days) {
             errors.days = 'Working Days is required';
             isValid = false;
-        }
+        } 
 
         if (!newSalary.date) {
             errors.date = 'Date is required';
             isValid = false;
+        } else if (!validateDate(newSalary.date)) {
+            errors.date = 'Please select a recent date';
+            isValid = false;
         }
+        
         setErrors(errors);
         return isValid;
     };
@@ -83,7 +161,7 @@ const SalaryForm = () => {
     }, [newSalary.salary, newSalary.days]);
 
     return (
-        <div style={{ height: '100vh', paddingTop: '64px', backgroundColor: '#B7EBBD' }}>
+        <div style={{ height: '150vh', paddingTop: '64px', backgroundColor: '#B7EBBD' }}>
             <AppBar position="fixed" style={{ backgroundColor: '#EDAF28', boxShadow: 'none' }}>
                 <Toolbar>
                     <Typography variant="h6" style={{ flexGrow: 1, fontWeight: 'bold' }}>
@@ -99,15 +177,15 @@ const SalaryForm = () => {
                 </Toolbar>
             </AppBar>
             <Container maxWidth="md" style={{ marginTop: '20px' }}>
-                <div style={{ backgroundColor: '#dedcdc', padding: '24px', borderRadius: '8px', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)' }}>
+                <div style={{ backgroundColor: '#fff', padding: '24px', borderRadius: '8px', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)' }}>
                     <Grid container spacing={3}>
                         <Grid item xs={12}>
-                            <Typography variant="h5" style={{ marginBottom: '10px' , textAlign:'center'}}><b>
-                                Employee Salary Calculate Form</b>
+                            <Typography variant="h6" style={{ marginBottom: '10px' }}>
+                                Employee Salary Calculate Form
                             </Typography>
                             <hr />
                             <Typography variant="h6" style={{ marginBottom: '10px' }}>
-                                Calculated Salary: {newSalary.fullSalary}
+                                Calculated Salary: Rs.{newSalary.fullSalary}
                             </Typography>
                             <hr />
                         </Grid>
@@ -127,9 +205,10 @@ const SalaryForm = () => {
                                 label="Name"
                                 fullWidth
                                 value={newSalary.name}
-                                onChange={(e) => setNewSalary({ ...newSalary, name: e.target.value })}
-                                error={!!errors.name}
-                                helperText={errors.name}
+                                onChange={(e) => handleNameChange(e.target.value)}
+                                required
+                                error={!!errors.name || !!nameError}
+                                helperText={errors.name || nameError}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -137,9 +216,9 @@ const SalaryForm = () => {
                                 label="Date"
                                 fullWidth
                                 value={newSalary.date}
-                                onChange={(e) => setNewSalary({ ...newSalary, date: e.target.value })}
-                                error={!!errors.date}
-                                helperText={errors.date}
+                                onChange={(e) => handleDateChange(e.target.value)}
+                                error={!!errors.date || !!dateError}
+                                helperText={errors.date || dateError}
                                 type='date'
                                 focused
                             />
@@ -149,10 +228,10 @@ const SalaryForm = () => {
                                 label="Per Day Salary"
                                 fullWidth
                                 value={newSalary.salary}
-                                onChange={(e) => setNewSalary({ ...newSalary, salary: e.target.value })}
+                                onChange={handleSalaryChange}
                                 error={!!errors.salary}
                                 helperText={errors.salary}
-                                type='number'
+                                type="number"
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -160,9 +239,9 @@ const SalaryForm = () => {
                                 label="Working Days"
                                 fullWidth
                                 value={newSalary.days}
-                                onChange={(e) => setNewSalary({ ...newSalary, days: e.target.value })}
-                                error={!!errors.days}
-                                helperText={errors.days}
+                                onChange={handleWorkingdaysChange}
+                                error={!!errors.days }
+                                helperText={errors.days }
                             />
                         </Grid>
                     </Grid>

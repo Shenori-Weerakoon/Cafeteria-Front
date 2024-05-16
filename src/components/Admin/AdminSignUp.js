@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 
 
 const useStyles = makeStyles((theme) => ({
+
     root: {
         minHeight: '100vh',
         display: 'flex',
@@ -17,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center',
       },
+
     paper: {
         marginTop: theme.spacing(3),
         display: 'flex',
@@ -43,6 +45,8 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+
+
 const AdminSignUp = () => {
     const classes = useStyles();
 
@@ -52,8 +56,11 @@ const AdminSignUp = () => {
 
     const [uid, setUId] = useState('A' + generateRandomID());
     const [name, setName] = useState('');
+    const [nameError, setNameError] = useState('');
     const [email, setEmail] = useState('');
+    const [emailError, setEmailError] = useState('');
     const [phone, setPhone] = useState('');
+    const [phoneError, setPhoneError] = useState('');
     const [nic, setNic] = useState('');
     const [status, setStatus] = useState('Activate');
     const [password, setPassword] = useState('');
@@ -64,6 +71,9 @@ const AdminSignUp = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        if (!validateName(name)) return;
+        if (!validateEmail(email)) return;
+        if (!validatePhone(phone)) return;
         if (!validatePassword()) return;
         if (!validateRePassword()) return;
         const type = "Admin";
@@ -114,6 +124,68 @@ const AdminSignUp = () => {
         }
 
     };
+    const validateName = (name) => {
+        const regex = /^[a-zA-Z\s]+$/; // Only letters and spaces
+        if (!name.trim()) {
+          setNameError('Name is required');
+          return false;
+        }
+        if (!regex.test(name)) {
+          setNameError('Name should contain only letters and spaces');
+          return false;
+        }
+        setNameError('');
+        return true;
+      };
+    
+      const handleNameChange = (e) => {
+        const value = e.target.value;
+        setName(value);
+    
+        validateName(value); // Validate the name on each change
+      };
+
+      const validateEmail = (email) => {
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Email pattern
+        if (!email.trim()) {
+          setEmailError('Email is required');
+          return false;
+        }
+        if (!regex.test(email)) {
+          setEmailError('Invalid email address');
+          return false;
+        }
+        setEmailError('');
+        return true;
+      };
+    
+      const handleEmailChange = (e) => {
+        const value = e.target.value;
+        setEmail(value);
+    
+        validateEmail(value); // Validate the email on each change
+      };
+
+      const validatePhone = (phone) => {
+        const regex = /^\d{10}$/; // Exactly 10 digits
+        if (!phone.trim()) {
+          setPhoneError('Phone number is required');
+          return false;
+        }
+        if (!regex.test(phone)) {
+          setPhoneError('Phone number must be exactly 10 digits');
+          return false;
+        }
+        setPhoneError('');
+        return true;
+      };
+    
+      const handlePhoneChange = (e) => {
+        const value = e.target.value;
+        setPhone(value);
+    
+        validatePhone(value); // Validate the phone number on each change
+      };
 
     const validatePassword = () => {
         if (password.length < 8) {
@@ -132,6 +204,13 @@ const AdminSignUp = () => {
         return true;
     };
 
+    const handlePasswordChange = (e) => {
+        const value = e.target.value;
+        setPassword(value);
+    
+        validatePassword(value); // Validate the phone number on each change
+      };
+
     const validateRePassword = () => {
         if (password !== rePassword) {
             setRePasswordError('Passwords do not match');
@@ -140,10 +219,21 @@ const AdminSignUp = () => {
         setRePasswordError('');
         return true;
     };
+    const handleRepasswordChange = (e) => {
+        const value = e.target.value;
+        setRePassword(value); // Correctly update the rePassword state
+    
+        // Validate passwords match after setting rePassword
+        if (password !== value) {
+            setRePasswordError('Passwords do not match');
+        } else {
+            setRePasswordError(''); // Clear the error if they match
+        }
+    };
+    
 
     return (
         <div className={classes.root}>
-        <div style={{backgroundColor:'#f5f8c9'}}>
         <Container component="main" maxWidth="xs">
             <CssBaseline />
             <div className={classes.paper}>
@@ -151,8 +241,8 @@ const AdminSignUp = () => {
                     <LockOutlinedIcon style={{ fontSize: 40 }} />
                 </Avatar>
                 <br />
-                <Typography component="h1" variant="h5"><b>
-                    Admin Sign Up</b>
+                <Typography component="h1" variant="h5">
+                    Admin Sign Up
                 </Typography>
                 <br />
                 <Card className={classes.card}>
@@ -185,7 +275,9 @@ const AdminSignUp = () => {
                                         name="name"
                                         autoComplete="name"
                                         value={name}
-                                        onChange={(e) => setName(e.target.value)}
+                                        onChange={handleNameChange}
+                                        error={!!nameError}
+                                        helperText={nameError}
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
@@ -210,8 +302,9 @@ const AdminSignUp = () => {
                                         label="Email Address"
                                         name="email"
                                         autoComplete="email"
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
+                                        onChange={handleEmailChange}
+                                        error={!!emailError}
+                                        helperText={emailError}
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
@@ -224,7 +317,9 @@ const AdminSignUp = () => {
                                         name="phone"
                                         autoComplete="phone"
                                         value={phone}
-                                        onChange={(e) => setPhone(e.target.value)}
+                                        onChange={handlePhoneChange}
+                                        error={!!phoneError}
+                                        helperText={phoneError}
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
@@ -238,7 +333,7 @@ const AdminSignUp = () => {
                                         id="password"
                                         autoComplete="new-password"
                                         value={password}
-                                        onChange={(e) => setPassword(e.target.value)}
+                                        onChange={handlePasswordChange}
                                         error={!!passwordError}
                                         helperText={passwordError}
                                     />
@@ -254,7 +349,7 @@ const AdminSignUp = () => {
                                         id="rePassword"
                                         autoComplete="new-password"
                                         value={rePassword}
-                                        onChange={(e) => setRePassword(e.target.value)}
+                                        onChange={ handleRepasswordChange}
                                         error={!!rePasswordError}
                                         helperText={rePasswordError}
                                     />
@@ -280,7 +375,6 @@ const AdminSignUp = () => {
                 </Card>
             </div>
         </Container>
-        </div>
         </div>
     );
 };

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -13,11 +13,20 @@ import DoneIcon from '@mui/icons-material/Done';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { TextField, Button } from '@mui/material';
+import {useReactToPrint} from "react-to-print";
 
 
 const OrderPaymentManage = () => {
     const [paidorder, setPaidOrder] = useState([]);
     const [codorder, setCodOrder] = useState([]);
+    const [paymentSearch, setPaymentSearch] = useState('');
+    const ComponentsRef = useRef(); 
+    const handlePrint = useReactToPrint({ 
+    content: () => ComponentsRef.current, 
+    DocumentTitle:"Orders Report", 
+    onafterprint:()=>alert("Orders Report Successfully Download!") 
+  })
 
     useEffect(() => {
         fetchPaidOrderDetails();
@@ -288,31 +297,73 @@ const OrderPaymentManage = () => {
         }
     };
 
+    const handlePaymentSearch = () => {
+        const filteredPaymentItem = paidorder.filter((order) => 
+            order.city.toLowerCase().includes(paymentSearch.toLowerCase())
+        );
+        setPaidOrder(filteredPaymentItem);
+    }
+    
+
+
 
 
     return (
-        <div style={{ display: 'flex', height: '100vh', maxWidth: '161vh' }}>
+        <div style={{ display: 'flex', height: '00vh', maxWidth: '161vh' }}>
             <Sidebar />
-            <div style={{ flexGrow: 1, padding: 20, backgroundColor: '#B7EBBD', display: 'flex', flexDirection: 'column' }}>
-                <AppBar position="static" sx={{ backgroundColor: '#EDAF28', boxShadow: 'none' }}>
+            <div style={{ flexGrow: 1, padding: 20, backgroundColor: '#ecf0f1', display: 'flex', flexDirection: 'column' }}>
+                <AppBar position="static" sx={{ backgroundColor: '#1c2331', boxShadow: 'none' }}>
                     <Toolbar>
-                        <Typography variant="h4" component="div">
+                        <Typography variant="h6" component="div">
                             Order Payment Management
                         </Typography>
                     </Toolbar>
                 </AppBar>
-                <div style={{ padding: 20, backgroundColor: '#d3d3d3', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', maxWidth: '161vh' }}>
+                <div style={{ padding: 20, backgroundColor: '#ffffff', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', maxWidth: '161vh' }}>
                     <Typography variant="h5" gutterBottom>
                         Paid Orders
                     </Typography>
+                    <TextField
+                    label = "Search"
+                    variant="outlined"
+                    size="small"
+                    style={{marginBottom: 10}}
+                    value={paymentSearch}
+                    onChange={(e) => setPaymentSearch(e.target.value)}></TextField>
+
+                <Button variant="contained" sx ={{bgcolor:'#B7EBBD', color:'#000000'}} onClick={handlePaymentSearch}>
+                    Search
+                </Button>
+
+                <button onClick={handlePrint}
+                             style={{
+                                backgroundColor: '#37a2d7',
+                                color: '#ffffff',
+                                padding: '10px', 
+                                variant : "contained",
+                                border: 'none', 
+                                borderRadius: '5px', 
+                                
+                            }}
+                            >
+                            <i className="fas fa-download" style={{ marginRight: '8px'}}></i> 
+                            Download
+                            </button>
+
+                            <div ref={ComponentsRef} style={{ width: '100%' }}>
+
                     <div style={{ width: '100%' }}>
                         <DataGrid rows={paidorder} columns={columns} pageSize={5} />
                     </div>
+                    
                 </div>
-                <div style={{ padding: 20, backgroundColor: '#d3d3d3', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', maxWidth: '161vh' }}>
+                </div>
+                <div style={{ padding: 20, backgroundColor: '#ffffff', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', maxWidth: '161vh' }}>
                     <Typography variant="h5" gutterBottom>
                         Cash On Delivery Orders
                     </Typography>
+
+                    
                     <div style={{ width: '100%' }}>
                         <DataGrid rows={codorder} columns={column} pageSize={5} />
                     </div>

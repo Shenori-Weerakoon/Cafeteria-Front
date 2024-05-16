@@ -9,6 +9,7 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundImage:`url(${'https://image.freepik.com/free-photo/abstract-blur-interior-coffee-shop-cafe-background_42682-256.jpg'})`,
         height: '100vh',
         backgroundColor: '#f5f5f5',
     },
@@ -36,32 +37,47 @@ const CheckoutPage = () => {
     const [orderId, setOrderId] = useState(checkoutItems.orderID);
     const [fullPrice, setFullPrice] = useState(checkoutItems.totalPrice);
     const [finalPrice, setFinalPrice] = useState(fullPrice);
-    const email = sessionStorage.getItem("cusmail");
-    const [promotions, setPromotionS] = useState([]);
+    const [email, setEmail] = useState('');
+    const [promotions, setPromotions] = useState([]);
+    const [selectedPromotion, setSelectedPromotion] = useState(null);
+    const [promotionErrorMessage, setPromotionErrorMessage] = useState('');
 
     useEffect(() => {
         fetchPromotionDetails();
+        const userEmail = sessionStorage.getItem("cusmail");
+        setEmail(userEmail);
     }, []);
 
     const fetchPromotionDetails = async () => {
         try {
             const response = await axios.get(global.APIUrl + '/promotion/all');
-            const promotionsWithId = response.data.map((promotion, index) => ({
-                id: index + 1,
-                ...promotion
-            }));
-            setPromotionS(promotionsWithId);
+            setPromotions(response.data);
         } catch (error) {
             console.error('Error fetching promotion details:', error);
         }
     };
 
-    useEffect(() => {
-        setFinalPrice(fullPrice - (fullPrice * (promotion / 100)));
-    }, [promotion, fullPrice]);
-
     const handleChange = (event) => {
-        setPromotion(event.target.value);
+        const selectedPromoId = event.target.value;
+        const selectedPromo = promotions.find(promo => promo._id === selectedPromoId);
+        console.log("promotion details" + selectedPromo.promo)
+        setSelectedPromotion(selectedPromo);
+        setPromotion(selectedPromoId);
+        console.log("promotion "+ promotion)
+        if (selectedPromo) {
+            console.log(selectedPromo);
+            if (fullPrice >= selectedPromo.con) {
+                const discountedPrice = fullPrice - (fullPrice * (selectedPromo.promo / 100));
+                setFinalPrice(discountedPrice);
+                console.log(discountedPrice);
+                setPromotionErrorMessage('Promotion Applied!!');
+            } else {
+                setFinalPrice(fullPrice);
+                setPromotionErrorMessage('Your full price is less than the promotion condition.');
+            }
+        } else {
+            setFinalPrice(fullPrice);
+        }
     };
 
     const handlePay = () => {
@@ -84,7 +100,7 @@ const CheckoutPage = () => {
 
     return (
         <div className={classes.root}>
-            <Paper className={classes.paper}>
+            <Paper className={classes.paper} style={{backgroundColor: '#f5deb3'}}>
                 <Typography variant="h4" gutterBottom style={{ color: 'black' }}>
                     Checkout
                 </Typography>
@@ -100,14 +116,36 @@ const CheckoutPage = () => {
                     Full Price: LKR {fullPrice}
                 </Typography>
 
+                {selectedPromotion && (
+                    <>
+                        <Typography variant="h6" gutterBottom>
+                            Promotion: {selectedPromotion.name}
+                        </Typography>
+                        <Typography variant="h6" gutterBottom>
+                            Promotion Discount: {selectedPromotion.promo}%
+                        </Typography>
+                        <Typography variant="h6" gutterBottom style={{ color: '#FF0000' }}>
+                            Your Total Amount Must Fulfill Below Condition.
+                        </Typography>
+                            
+
+                        <Typography variant="h6" gutterBottom>
+                            Promotion Condition: LKR {selectedPromotion.con}
+                        </Typography>
+                    </>
+                )}
+
+                {promotionErrorMessage && (
+                    <Typography variant="body1" gutterBottom style={{ color: 'orange' }}>
+                        {promotionErrorMessage}
+                    </Typography>
+                )}
+
                 <Typography variant="h6" gutterBottom>
                     Final Price after Promotion: LKR {finalPrice}
                 </Typography>
-                <Typography variant="h6" gutterBottom style={{ paddingTop: '20px' }}>
-                    Add Your Promotion
-                </Typography>
 
-                <FormControl className={classes.formControl} style={{ marginBottom: '20px' }}>
+                <FormControl className={classes.formControl} style={{ marginBottom: '20px',backgroundColor: '#ffffff'}}>
                     <InputLabel id="demo-simple-select-label">Promotion</InputLabel>
                     <Select
                         labelId="demo-simple-select-label"
@@ -118,9 +156,8 @@ const CheckoutPage = () => {
                         {promotions
                             .filter(item => item.status === 'Activate')
                             .map(item => (
-                                <MenuItem key={item.id} value={item.promo}>{item.name}</MenuItem>
+                                <MenuItem key={item._id} value={item._id}>{item.name}</MenuItem>
                             ))}
-
                     </Select>
                 </FormControl>
                 <br />
