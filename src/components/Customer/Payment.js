@@ -67,6 +67,12 @@ const Payment = () => {
         }
         if (!expirationDate.trim()) {
             errors.expirationDate = 'Expiration date is required';
+        }else {
+            const currentDate = new Date();
+            const enteredDate = new Date(expirationDate);
+            if (enteredDate <= currentDate) {
+                errors.expirationDate = 'Expiration date must be in the future';
+            }
         }
         if (!cvv.trim()) {
             errors.cvv = 'CVV is required';
