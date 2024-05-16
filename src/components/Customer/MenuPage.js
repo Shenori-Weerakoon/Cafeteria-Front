@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
         padding: theme.spacing(4),
+        backgroundImage: `url(${'https://www.scrantonproducts.com/wp-content/uploads/2017/06/iStock-533776553.jpg'})`,
     },
     card: {
         maxWidth: 345,
@@ -48,7 +49,6 @@ const MenuPage = () => {
     const [quantity, setQuantity] = useState({});
     const [menu, setMenu] = useState([]);
     const [menuSearch, setMenuSearch] = useState('');
-    const [searchResults, setSearchResults] = useState([]);
 
     useEffect(() => {
         fetchMenuDetails();
@@ -112,7 +112,7 @@ const MenuPage = () => {
         <div>
             <Navbar />
             <div className={classes.root}>
-                <Typography gutterBottom variant="h3" component="h3" style={{ fontWeight: 'bold', textAlign: 'center' }}>
+                <Typography gutterBottom variant="h3" component="h3" style={{ fontWeight: 'bold', textAlign: 'center', color:'white' }}>
                     Menu Items
                     <hr style={{ width: '150px' }} />
                 </Typography>
@@ -121,7 +121,7 @@ const MenuPage = () => {
                     label = "Search"
                     variant="outlined"
                     size="small"
-                    style={{marginBottom: 10}}
+                    style={{marginBottom: 25, marginRight: 50, marginLeft: 50, width: '800px', background:'white', alignContent:'center'}}
                     value={menuSearch}
                     onChange={(e) => setMenuSearch(e.target.value)} />
 
