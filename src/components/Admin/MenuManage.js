@@ -10,6 +10,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import { TextField } from '@material-ui/core';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { Avatar } from '@mui/material';
@@ -17,6 +18,7 @@ import{useReactToPrint} from "react-to-print"
 
 const MenuManage = () => {
     const [menu, setMenu] = useState([]); //initializing status to menu-array
+    const [menuItemSearch, setMenuItemSearch] = useState('');
     const ComponentsRef = useRef(); 
 
     const handlePrint = useReactToPrint({ 
@@ -164,6 +166,13 @@ function renderPicture(params) {
     return <Avatar alt="Item Picture" src={params.value} sx={{ width: 50, height: 50 }} variant="square" />;
 }
 
+const handleMenuSearch = () => {
+    const filteredMenuItem = menu.filter((menuItm) => 
+        menuItm.itemName.toLowerCase().includes(menuItemSearch.toLowerCase())
+    );
+    setMenu(filteredMenuItem)
+}
+
 return(
     <div style={{ display: 'flex', height: '100vh', maxWidth: '161vh' }}>
 
@@ -187,15 +196,28 @@ return(
                         Item Details
                     </Typography>
 
+                    <TextField
+                    label = "Search"
+                    variant="outlined"
+                    size="small"
+                    style={{marginBottom: 15, marginRight: 50, width: '600px'}}
+                    value={menuItemSearch}
+                    onChange={(e) => setMenuItemSearch(e.target.value)} />
+
+                <Button variant="contained" sx ={{bgcolor:'#B7EBBD', color:'#000000'}} onClick={handleMenuSearch}>
+                    Search
+                </Button>
+
                     <button onClick={handlePrint}
                              style={{
                                 backgroundColor: '#37a2d7',
-                                color: '#ffffff',
+                                color: '#000000',
                                 padding: '10px', 
                                 variant : "contained",
                                 border: 'none', 
                                 borderRadius: '5px', 
-                                
+                                marginLeft: 50,
+                                bgcolor:'#B7EBBD'
                             }}
                             >
                             <i className="fas fa-download" style={{ marginRight: '8px'}}></i> 
