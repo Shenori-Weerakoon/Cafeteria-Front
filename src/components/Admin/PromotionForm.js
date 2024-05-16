@@ -9,7 +9,8 @@ const PromotionForm = () => {
         name: '',
         promo: 0,
         status: 'Deactive',
-        date: ''
+        date: '',
+        con: 0
     });
 
     const info = JSON.parse(localStorage.getItem("selectedPromotion"));
@@ -101,12 +102,25 @@ const PromotionForm = () => {
             isValid = false;
         }
 
-        if (promotion.promo === 0) {
-            errors.promo = 'Promotion is required';
+        if (promotion.promo <= 0) {
+            errors.promo = 'Promotion must be greater than o';
             isValid = false;
         }
         if (!promotion.date.trim()) {
             errors.date = 'Promotion Date is required';
+            isValid = false;
+        }else {
+            const currentDate = new Date();
+            const selectedDate = new Date(promotion.date);
+            if (selectedDate <= currentDate) { // Check if selected date is in the past
+                errors.date = 'Promotion Date must be in the future';
+                isValid = false;
+            }
+        }
+        
+
+        if (promotion.con <= 0) {
+            errors.con = 'Promotion Condition is required';
             isValid = false;
         }
 
@@ -138,7 +152,7 @@ const PromotionForm = () => {
                             Edit
                         </Button>
                     ) : (
-                        <Button variant="contained"sx={{bgcolor:'#009637',color:'#ffffff'}}   onClick={handleAddItem}>
+                        <Button variant="contained" sx={{bgcolor:'#009637',color:'#ffffff'}} onClick={handleAddItem}>
                             Add
                         </Button>
                     )}
@@ -195,6 +209,20 @@ const PromotionForm = () => {
                                 error={!!errors.date}
                                 helperText={errors.date}
                                 type='date'
+                                focused
+                            />
+                        </Grid>
+
+                        <Grid item xs={12}>
+                            <TextField
+                                label="Condition"
+                                fullWidth
+                                value={promotion.con}
+                                onChange={(e) => setPromotion({ ...promotion, con: e.target.value })}
+                                error={!!errors.con}
+                                helperText={errors.con}
+                                type='number'
+                               
                                 focused
                             />
                         </Grid>

@@ -134,6 +134,16 @@ function Profile() {
 
     const handleSaveChanges = async () => {
         try {
+
+            if (edtphone.length > 10) {
+                Swal.fire({
+                    title: "Error!",
+                    text: "Phone number should not exceed 10 digits.",
+                    icon: 'error',
+                    confirmButtonText: "OK"
+                });
+                return; // Prevent further execution
+            }
             var data = {
                 name: edtname,                
                 phone: edtphone,
